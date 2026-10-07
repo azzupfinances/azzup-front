@@ -1,5 +1,5 @@
 import { HeroMockup } from '@/features/landing/components/HeroMockup/HeroMockup'
-import { HERO_HIGHLIGHTS, SIGN_UP_HREF } from '@/features/landing/constants/landing-content'
+import { HERO_HIGHLIGHTS } from '@/features/landing/constants/landing-content'
 import { Badge } from '@/shared/components/Badge/Badge'
 import { Button } from '@/shared/components/Button/Button'
 import { Heading } from '@/shared/components/Heading/Heading'
@@ -8,6 +8,7 @@ import { IconCircle } from '@/shared/components/IconCircle/IconCircle'
 import { Reveal } from '@/shared/components/Reveal/Reveal'
 import { Section } from '@/shared/components/Section/Section'
 import { Text } from '@/shared/components/Text/Text'
+import { SIGN_UP_HREF } from '@/shared/constants/routes'
 
 import styles from './HeroSection.module.scss'
 

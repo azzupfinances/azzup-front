@@ -12,6 +12,34 @@
   outline-offset: 2px;
 }
 
+// Shared surface of text-like controls (inputs, selects) so every field looks the same.
+@mixin field-surface {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+
+  &:focus-within {
+    border-color: var(--color-primary);
+    background-color: var(--color-background);
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+@mixin field-surface-error {
+  &,
+  &:hover {
+    border-color: var(--color-danger);
+  }
+}
+
 @mixin reduced-motion {
   @media (prefers-reduced-motion: reduce) {
     @content;
@@ -27,7 +55,7 @@
   }
 
   @include breakpoint-up(lg) {
-    padding-inline: var(--spacing-3xl);
+    padding-inline: var(--spacing-2xl);
   }
 
   @include breakpoint-up(xl) {

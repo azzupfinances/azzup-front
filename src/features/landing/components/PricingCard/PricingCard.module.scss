@@ -13,7 +13,7 @@
 
 // The plan on sale uses the inverted palette; nested Text picks it up through the color variables.
 .featured {
-  --text-color: rgb(255 255 255 / 0.72);
+  --text-color: var(--color-on-inverted-muted);
 
   border-color: var(--color-inverted);
   background-color: var(--color-inverted);
@@ -43,7 +43,7 @@
   .period,
   .priceDetail,
   .feature {
-    color: rgb(255 255 255 / 0.72);
+    color: var(--color-on-inverted-muted);
   }
 
   .featureIcon {
@@ -51,12 +51,17 @@
   }
 }
 
-.comingSoon .name {
+.comingSoon .badge {
+  white-space: nowrap;
+}
+
+.name {
   color: var(--color-muted);
 }
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-sm);

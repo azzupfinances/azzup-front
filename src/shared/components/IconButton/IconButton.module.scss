@@ -1,0 +1,61 @@
+@use '@/styles/mixins' as *;
+
+.iconButton {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  color: var(--color-heading);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.ghost {
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--color-surface);
+  }
+}
+
+.outline {
+  border-color: var(--color-border);
+  background-color: var(--color-background);
+
+  &:hover {
+    background-color: var(--color-surface);
+  }
+}
+
+.soft {
+  background-color: var(--color-accent-soft);
+  color: var(--color-primary);
+
+  &:hover {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+}
+
+.sm {
+  width: 32px;
+  height: 32px;
+}
+
+// 44px keeps the touch target comfortable on phones.
+.md {
+  width: 44px;
+  height: 44px;
+}

@@ -1,6 +1,5 @@
-import Link from 'next/link'
-
 import { FOOTER_LINK_GROUPS } from '@/features/landing/constants/landing-content'
+import { Logo } from '@/shared/components/Logo/Logo'
 import { PanelRow } from '@/shared/components/PanelRow/PanelRow'
 import { Text } from '@/shared/components/Text/Text'
 
@@ -13,9 +12,7 @@ export function LandingFooter() {
     <PanelRow as="footer">
       <div className={styles.content}>
         <div className={styles.brand}>
-          <Link href="/" className={styles.logo}>
-            Azzup
-          </Link>
+          <Logo className={styles.logo} />
           <Text size="sm">Tudo o que você precisa, em um só lugar.</Text>
           <Text size="sm" tone="muted">
             © {currentYear} Azzup. Todos os direitos reservados.

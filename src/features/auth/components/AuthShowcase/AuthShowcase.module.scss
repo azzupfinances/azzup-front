@@ -1,0 +1,156 @@
+@use '@/styles/mixins' as *;
+
+$slide-duration: 7s;
+$dots-area-height: 96px;
+$caption-overlap: 48px;
+
+.showcase {
+  display: none;
+
+  // Sticky and viewport-tall so taller forms (sign-up) scroll while the caption stays visible.
+  @include breakpoint-up(lg) {
+    position: sticky;
+    top: var(--spacing-md);
+    display: block;
+    align-self: start;
+    height: calc(100dvh - var(--spacing-md) * 2);
+    margin: var(--spacing-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 28px;
+    background-color: var(--color-surface);
+  }
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: $dots-area-height;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-slow),
+    visibility var(--transition-slow);
+}
+
+.isActive {
+  opacity: 1;
+  visibility: visible;
+}
+
+// The scene takes whatever height the caption leaves and dissolves into the panel,
+// so the caption only overlaps its faded edge, even on short viewports.
+.scene {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin-bottom: -$caption-overlap;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
+}
+
+.caption {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding-inline: var(--spacing-xl);
+  text-align: center;
+}
+
+.isActive .caption {
+  animation: caption-in 700ms var(--easing-reveal) 200ms backwards;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.15;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.highlightedTitle {
+  color: var(--color-primary);
+}
+
+.description {
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.dots {
+  position: absolute;
+  bottom: var(--spacing-2xl);
+  left: 50%;
+  display: flex;
+  gap: var(--spacing-sm);
+  transform: translateX(-50%);
+}
+
+.dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  cursor: pointer;
+  transition: width var(--transition-base);
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.isActiveDot {
+  width: 32px;
+  background-color: var(--color-accent);
+}
+
+.dotProgress {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color-primary);
+  transform-origin: left;
+  animation: dot-progress $slide-duration linear;
+}
+
+.showcase:hover .dotProgress {
+  animation-play-state: paused;
+}
+
+@include reduced-motion {
+  .slide {
+    transition: none;
+  }
+
+  .isActive .caption {
+    animation: none;
+  }
+
+  .dotProgress {
+    animation: none;
+  }
+}
+
+@keyframes caption-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes dot-progress {
+  from {
+    transform: scaleX(0);
+  }
+}

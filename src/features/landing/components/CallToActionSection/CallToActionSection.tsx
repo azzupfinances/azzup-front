@@ -1,12 +1,12 @@
 import { Check } from 'lucide-react'
 
-import { SIGN_UP_HREF } from '@/features/landing/constants/landing-content'
 import { Button } from '@/shared/components/Button/Button'
 import { Heading } from '@/shared/components/Heading/Heading'
 import { IconCircle } from '@/shared/components/IconCircle/IconCircle'
 import { Reveal } from '@/shared/components/Reveal/Reveal'
 import { Section } from '@/shared/components/Section/Section'
 import { Text } from '@/shared/components/Text/Text'
+import { SIGN_UP_HREF } from '@/shared/constants/routes'
 
 import styles from './CallToActionSection.module.scss'
 

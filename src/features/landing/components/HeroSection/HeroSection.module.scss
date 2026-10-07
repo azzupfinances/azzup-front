@@ -38,6 +38,7 @@
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
 }

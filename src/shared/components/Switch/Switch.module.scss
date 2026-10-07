@@ -25,7 +25,7 @@ $knob-size: 20px;
   width: $knob-size;
   height: $knob-size;
   border-radius: var(--radius-full);
-  background-color: var(--color-background);
+  background-color: var(--color-on-inverted);
   box-shadow: var(--shadow-sm);
   transition: transform var(--transition-base);
 }

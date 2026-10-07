@@ -1,0 +1,51 @@
+@use '@/styles/mixins' as *;
+
+.control {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height-md);
+  @include field-surface;
+}
+
+.hasError {
+  @include field-surface-error;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px var(--spacing-md);
+  border: none;
+  background: transparent;
+  color: var(--color-heading);
+  font: inherit;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  outline: none;
+
+  &::placeholder {
+    color: var(--color-muted);
+    font-weight: var(--font-weight-regular);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.startAdornment {
+  display: flex;
+  padding-left: var(--spacing-md);
+  color: var(--color-muted);
+  font-weight: var(--font-weight-semibold);
+
+  + .input {
+    padding-left: var(--spacing-sm);
+  }
+}
+
+.endAdornment {
+  display: flex;
+  padding-right: var(--spacing-xs);
+}

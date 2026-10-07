@@ -1,6 +1,8 @@
 @use './mixins' as *;
 
 :root {
+  color-scheme: light;
+
   // Brand
   --color-primary: #1d6fe8;
   --color-accent: #a8cfff;
@@ -8,6 +10,12 @@
   --color-on-accent: #0f2a4a;
   --color-inverted: #0f2a4a;
   --color-on-inverted: #ffffff;
+  --color-on-inverted-muted: rgb(255 255 255 / 0.72);
+
+  // Accent panels (call-to-action sections)
+  --color-accent-panel: var(--color-accent);
+  --color-on-accent-panel: var(--color-on-accent);
+  --color-accent-panel-highlight: var(--color-primary);
 
   // Neutrals
   --color-page: #e2e7f1;
@@ -17,6 +25,19 @@
   --color-text: #4c5267;
   --color-muted: #7a8194;
   --color-border: #e2e7f1;
+
+  // Feedback (text/icon color + soft background for badges, toasts and alerts)
+  --color-success: #12a150;
+  --color-success-soft: #e3f6eb;
+  --color-warning: #c27803;
+  --color-warning-soft: #fdf3dc;
+  --color-danger: #d93a3a;
+  --color-danger-soft: #fdeaea;
+  --color-danger-hover: #b92e2e;
+
+  // Overlays and effects
+  --color-backdrop: rgb(15 42 74 / 0.45);
+  --color-shimmer: rgb(255 255 255 / 0.7);
 
   // Gradients and patterns
   --gradient-hero: radial-gradient(
@@ -81,6 +102,13 @@
   --shadow-sm: 0 1px 2px rgb(15 42 74 / 0.06);
   --shadow-md: 0 7px 29px rgb(100 100 111 / 0.2);
   --shadow-lg: -17px 16px 52px rgb(0 0 0 / 0.13);
+  --shadow-overlay: 0 -8px 40px rgb(15 42 74 / 0.18);
+  --shadow-focus: 0 0 0 3px var(--color-accent-soft);
+  --shadow-primary: 0 6px 16px rgb(29 111 232 / 0.3);
+
+  // Stacking
+  --z-overlay: 100;
+  --z-toast: 200;
 
   // Motion
   --transition-fast: 150ms ease;
@@ -89,6 +117,9 @@
   --duration-reveal: 800ms;
   --easing-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
+  // Controls
+  --control-height-md: 48px;
+
   // Layout
   --content-max-width: 1200px;
   --panel-gap: 1px;
@@ -96,4 +127,74 @@
   @include breakpoint-up(xl) {
     --content-max-width: 1520px;
   }
+}
+
+// Dark theme: same tokens, deep navy surfaces instead of gray to stay on brand.
+// Light is the default. Only the system (/azzup) sets `data-theme="dark"` on <html>;
+// public pages (landing, login, sign-up) always stay light.
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  // Brand
+  --color-primary: #4b8ff0;
+  --color-accent: #a8cfff;
+  --color-accent-soft: #16294a;
+  --color-on-accent: #0f2a4a;
+  --color-inverted: #17325e;
+  --color-on-inverted: #ffffff;
+  --color-on-inverted-muted: rgb(255 255 255 / 0.72);
+
+  // Accent panels: a deep brand blue instead of the bright light-blue surface.
+  --color-accent-panel: #1a4ea3;
+  --color-on-accent-panel: #ffffff;
+  --color-accent-panel-highlight: var(--color-accent);
+
+  // Neutrals
+  --color-page: #050c18;
+  --color-background: #0b1626;
+  --color-surface: #111f35;
+  --color-heading: #f1f5fb;
+  --color-text: #b3bed2;
+  --color-muted: #7d89a1;
+  --color-border: #1f2f4a;
+
+  // Feedback
+  --color-success: #3ccf7f;
+  --color-success-soft: #0f2e20;
+  --color-warning: #f2b544;
+  --color-warning-soft: #33270e;
+  --color-danger: #f26d6d;
+  --color-danger-soft: #3a1619;
+  --color-danger-hover: #d95555;
+
+  // Overlays and effects
+  --color-backdrop: rgb(0 0 0 / 0.6);
+  --color-shimmer: rgb(255 255 255 / 0.06);
+
+  // Gradients and patterns
+  --gradient-hero: radial-gradient(
+    200% 300% at -30% -60%,
+    rgb(11 22 38 / 0) 56%,
+    #173b75 71%,
+    #1d6fe8 100%
+  );
+  --gradient-highlight-sheen: linear-gradient(
+    105deg,
+    transparent 0 40%,
+    rgb(255 255 255 / 0.55) 50%,
+    transparent 60% 100%
+  );
+  --pattern-stripes: repeating-linear-gradient(
+    45deg,
+    rgb(31 47 74 / 0.9) 0 1px,
+    transparent 1px 14px
+  );
+  --pattern-dots: radial-gradient(rgb(179 190 210 / 0.12) 1.5px, transparent 1.5px);
+
+  // Elevation
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 8px 30px rgb(0 0 0 / 0.45);
+  --shadow-lg: -17px 16px 52px rgb(0 0 0 / 0.5);
+  --shadow-overlay: 0 -8px 40px rgb(0 0 0 / 0.5);
+  --shadow-primary: 0 6px 16px rgb(75 143 240 / 0.3);
 }

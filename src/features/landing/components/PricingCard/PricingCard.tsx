@@ -1,21 +1,20 @@
 import { Check, Clock } from 'lucide-react'
 
-import { SIGN_UP_HREF } from '@/features/landing/constants/landing-content'
 import type {
   BillingCycle,
   PlanPricing,
   PricingPlan,
 } from '@/features/landing/types/landing.types'
 import {
-  formatPriceInCents,
   getYearlyDiscountPercentage,
   getYearlyMonthlyEquivalentInCents,
-  splitPriceInCents,
 } from '@/features/landing/utils/pricing'
 import { Badge } from '@/shared/components/Badge/Badge'
 import { Button } from '@/shared/components/Button/Button'
 import { Text } from '@/shared/components/Text/Text'
+import { SIGN_UP_HREF } from '@/shared/constants/routes'
 import { classNames } from '@/shared/utils/class-names'
+import { formatCurrency, splitCurrency } from '@/shared/utils/format-currency'
 
 import styles from './PricingCard.module.scss'
 
@@ -45,7 +44,7 @@ function AvailableCard({ plan, pricing, billingCycle }: AvailableCardProps) {
   const displayedPriceInCents = isYearly
     ? getYearlyMonthlyEquivalentInCents(pricing)
     : (introductoryOffer?.priceInCents ?? pricing.monthlyPriceInCents)
-  const { integer, cents } = splitPriceInCents(displayedPriceInCents)
+  const { integer, cents } = splitCurrency(displayedPriceInCents)
 
   const badgeLabel = isYearly
     ? `Economize ${getYearlyDiscountPercentage(pricing)}%`
@@ -55,7 +54,7 @@ function AvailableCard({ plan, pricing, billingCycle }: AvailableCardProps) {
     <article className={classNames(styles.card, styles.featured)}>
       <header className={styles.header}>
         <h3 className={styles.name}>{plan.name}</h3>
-        {badgeLabel && <Badge>{badgeLabel}</Badge>}
+        {badgeLabel && <Badge className={styles.badge}>{badgeLabel}</Badge>}
       </header>
 
       {/* Keyed by cycle so the entrance animation replays when the billing cycle changes. */}
@@ -76,9 +75,9 @@ function AvailableCard({ plan, pricing, billingCycle }: AvailableCardProps) {
 
         <p className={styles.priceDetail}>
           {isYearly
-            ? `${formatPriceInCents(pricing.yearlyPriceInCents)} cobrados uma vez por ano.`
+            ? `${formatCurrency(pricing.yearlyPriceInCents)} cobrados uma vez por ano.`
             : introductoryOffer &&
-              `Depois, ${formatPriceInCents(pricing.monthlyPriceInCents)}/mês a partir do ${introductoryOffer.durationInMonths + 1}º mês.`}
+              `Depois, ${formatCurrency(pricing.monthlyPriceInCents)}/mês a partir do ${introductoryOffer.durationInMonths + 1}º mês.`}
         </p>
       </div>
 
@@ -109,7 +108,7 @@ function ComingSoonCard({ plan }: ComingSoonCardProps) {
     <article className={classNames(styles.card, styles.comingSoon)}>
       <header className={styles.header}>
         <h3 className={styles.name}>{plan.name}</h3>
-        <Badge>
+        <Badge className={styles.badge}>
           <Clock size={14} aria-hidden="true" />
           Em breve
         </Badge>

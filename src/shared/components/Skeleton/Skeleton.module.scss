@@ -1,0 +1,44 @@
+@use '@/styles/mixins' as *;
+
+.skeleton {
+  display: block;
+  flex-shrink: 0;
+  width: var(--skeleton-width);
+  height: var(--skeleton-height);
+  background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-shimmer) 50%,
+      transparent 100%
+    )
+    var(--color-border);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+.line {
+  border-radius: var(--radius-full);
+}
+
+.block {
+  border-radius: var(--radius-lg);
+}
+
+.circle {
+  border-radius: var(--radius-full);
+  aspect-ratio: 1;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 150% 0;
+  }
+
+  to {
+    background-position: -50% 0;
+  }
+}

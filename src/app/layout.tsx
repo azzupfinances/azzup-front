@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import type { ReactNode } from 'react'
 
+import { getThemeInitScript } from '@/lib/theme/theme'
+import { ToastProvider } from '@/shared/components/ToastProvider/ToastProvider'
+import { SYSTEM_HREF } from '@/shared/constants/routes'
+
 import '@/styles/globals.scss'
 
 const montserrat = Montserrat({
@@ -23,8 +27,14 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="pt-BR" className={montserrat.variable}>
-      <body>{children}</body>
+    // The init script sets `data-theme` before hydration, so React must not flag it.
+    <html lang="pt-BR" className={montserrat.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getThemeInitScript(SYSTEM_HREF) }} />
+      </head>
+      <body>
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   )
 }

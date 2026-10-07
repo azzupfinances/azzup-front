@@ -39,6 +39,12 @@ export function UsersListPage() {
 URL segments are technical and stay in English (`/users/create`, not `/usuarios/novo`)
 unless localized URLs are explicitly required.
 
+**Project decision:** routes inside the logged-in system (`/azzup/...`) use Portuguese
+segments, because users see them (`/azzup/inicio`, `/azzup/extrato`, `/azzup/contas`).
+Only the URL is localized: folders under `src/app/azzup/` follow the URL, while features,
+components and everything else stay in English (`/azzup/extrato` renders
+`features/transactions`). Public routes keep their current names (`/login`, `/register`).
+
 ## Backend Field Names
 
 If an external API returns non-English fields, map them to English types at the service boundary.

@@ -1,0 +1,47 @@
+@use '@/styles/mixins' as *;
+
+.control {
+  position: relative;
+  display: flex;
+  min-height: var(--control-height-md);
+  @include field-surface;
+}
+
+.hasError {
+  @include field-surface-error;
+}
+
+.select {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 44px 12px var(--spacing-md);
+  border: none;
+  background: transparent;
+  color: var(--color-heading);
+  font: inherit;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+
+  // The empty placeholder option looks like an input placeholder.
+  &:has(option[value='']:checked) {
+    color: var(--color-muted);
+    font-weight: var(--font-weight-regular);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-md);
+  color: var(--color-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}

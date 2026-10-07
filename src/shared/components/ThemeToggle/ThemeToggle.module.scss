@@ -1,0 +1,37 @@
+@use '@/styles/mixins' as *;
+
+.toggle {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-background);
+  color: var(--color-heading);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-surface);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.sunIcon {
+  display: none;
+}
+
+:global(:root[data-theme='dark']) {
+  .moonIcon {
+    display: none;
+  }
+
+  .sunIcon {
+    display: block;
+  }
+}

@@ -24,7 +24,7 @@
   }
 
   @include breakpoint-up(lg) {
-    min-width: 88px;
+    min-width: var(--spacing-2xl);
   }
 
   @include breakpoint-up(xl) {
@@ -58,7 +58,7 @@
 // Variants override the color variables consumed by Heading, Text, HighlightText and TextLink.
 .inverted {
   --heading-color: var(--color-on-inverted);
-  --text-color: rgb(255 255 255 / 0.72);
+  --text-color: var(--color-on-inverted-muted);
   --highlight-color: var(--color-accent);
   --link-color: var(--color-accent);
 
@@ -67,10 +67,10 @@
 }
 
 .accent {
-  --heading-color: var(--color-on-accent);
-  --text-color: var(--color-on-accent);
-  --highlight-color: var(--color-primary);
+  --heading-color: var(--color-on-accent-panel);
+  --text-color: var(--color-on-accent-panel);
+  --highlight-color: var(--color-accent-panel-highlight);
 
-  background-color: var(--color-accent);
-  color: var(--color-on-accent);
+  background-color: var(--color-accent-panel);
+  color: var(--color-on-accent-panel);
 }

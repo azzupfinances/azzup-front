@@ -18,9 +18,7 @@ import type {
   PricingPlan,
   StepItem,
 } from '@/features/landing/types/landing.types'
-
-export const SIGN_UP_HREF = '/register'
-export const SIGN_IN_HREF = '/login'
+import { SIGN_IN_HREF, SIGN_UP_HREF } from '@/shared/constants/routes'
 
 export const NAVIGATION_LINKS: NavigationLink[] = [
   { label: 'Recursos', href: '#features' },

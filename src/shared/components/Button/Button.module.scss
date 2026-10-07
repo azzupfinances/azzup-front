@@ -77,6 +77,15 @@
   }
 }
 
+.danger {
+  background-color: var(--color-danger);
+  color: var(--color-on-inverted);
+
+  &:hover {
+    background-color: var(--color-danger-hover);
+  }
+}
+
 .sm {
   padding: var(--spacing-sm) 14px;
   font-size: var(--font-size-sm);

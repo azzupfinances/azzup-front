@@ -1,0 +1,140 @@
+@use '@/styles/mixins' as *;
+
+// The dialog is a transparent full-screen layer; `.panel` is the visible surface.
+.modal {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  &[open] {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  &::backdrop {
+    background-color: var(--color-backdrop);
+    backdrop-filter: blur(2px);
+  }
+
+  @include breakpoint-up(md) {
+    &[open] {
+      align-items: center;
+      padding: var(--spacing-lg);
+    }
+  }
+}
+
+:global(html):has(.modal[open]) {
+  overflow: hidden;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 90dvh;
+  border-radius: 24px 24px 0 0;
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-overlay);
+  animation: sheet-in 300ms var(--easing-reveal);
+
+  @include breakpoint-up(md) {
+    max-width: 520px;
+    max-height: calc(100dvh - var(--spacing-3xl));
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    animation-name: dialog-in;
+  }
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+// Drag-handle affordance of bottom sheets; decorative only.
+.handle {
+  width: 40px;
+  height: 4px;
+  margin: var(--spacing-sm) auto 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+
+  @include breakpoint-up(md) {
+    display: none;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg) 0;
+
+  @include breakpoint-up(md) {
+    padding-top: var(--spacing-lg);
+  }
+}
+
+.headerOnly {
+  padding-bottom: var(--spacing-lg);
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.title {
+  color: var(--color-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.02em;
+}
+
+.description {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.6;
+}
+
+.body {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  padding-bottom: max(var(--spacing-md), env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-border);
+
+  @include breakpoint-up(md) {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+}

@@ -6,7 +6,7 @@ import { classNames } from '@/shared/utils/class-names'
 
 import styles from './Button.module.scss'
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost'
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
 type ButtonStyleProps = {
