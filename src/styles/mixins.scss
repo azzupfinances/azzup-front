@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use './variables' as *;
+@use '@/styles/variables' as *;
 
 @mixin breakpoint-up($name) {
   @media (min-width: map.get($breakpoints, $name)) {
