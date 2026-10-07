@@ -1,0 +1,25 @@
+@use '@/styles/mixins' as *;
+
+.highlight {
+  background-color: var(--highlight-color, var(--color-primary));
+  background-image: var(--gradient-highlight-sheen);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sheen 15s ease-in-out infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes sheen {
+  0% {
+    background-position: 150%;
+  }
+
+  100% {
+    background-position: -50%;
+  }
+}

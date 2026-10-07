@@ -1,0 +1,76 @@
+@use '@/styles/mixins' as *;
+
+.panel {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+
+  @include breakpoint-up(md) {
+    padding: var(--spacing-xl);
+  }
+}
+
+.logo {
+  color: var(--color-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  text-decoration: none;
+}
+
+.navigation {
+  display: none;
+
+  @include breakpoint-up(lg) {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    gap: var(--spacing-xs);
+    transform: translateX(-50%);
+  }
+}
+
+.navigationLink {
+  padding: 12px var(--spacing-md);
+  border-radius: var(--radius-full);
+  color: var(--color-heading);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base);
+
+  &:hover {
+    background-color: var(--color-surface);
+    transform: scale(1.02);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.separator {
+  display: none;
+  width: 1px;
+  height: 35px;
+  background-color: var(--color-border);
+
+  @include breakpoint-up(lg) {
+    display: block;
+  }
+}

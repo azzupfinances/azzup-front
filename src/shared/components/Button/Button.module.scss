@@ -1,0 +1,97 @@
+@use '@/styles/mixins' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    transform var(--transition-base);
+
+  &:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.arrow {
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+// Filled variants swap to the inverted color on hover, keeping the accent as text.
+.primary {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+
+  &:hover {
+    background-color: var(--color-inverted);
+    color: var(--color-accent);
+  }
+}
+
+.secondary {
+  background-color: var(--color-background);
+  color: var(--color-heading);
+
+  &:hover {
+    background-color: var(--color-inverted);
+    color: var(--color-accent);
+  }
+}
+
+.outline {
+  background-color: transparent;
+  border-color: var(--color-border);
+  color: var(--color-heading);
+
+  &:hover {
+    background-color: var(--color-surface);
+  }
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--color-heading);
+
+  &:hover {
+    background-color: var(--color-surface);
+    transform: scale(1.02);
+  }
+}
+
+.sm {
+  padding: var(--spacing-sm) 14px;
+  font-size: var(--font-size-sm);
+}
+
+.md {
+  padding: 12px var(--spacing-md);
+  font-size: var(--font-size-md);
+}
+
+.lg {
+  padding: 14px var(--spacing-lg);
+  font-size: var(--font-size-md);
+}
+
+.fullWidth {
+  width: 100%;
+}

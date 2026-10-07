@@ -1,0 +1,53 @@
+@use '@/styles/mixins' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: var(--spacing-lg);
+  list-style: none;
+
+  @include breakpoint-up(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Dashed vertical guide on the left of each item.
+.item {
+  position: relative;
+  padding-block: var(--spacing-xl);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 1px;
+    background: var(--pattern-dashed-line);
+  }
+}
+
+.marker {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.accentBar {
+  position: relative;
+  z-index: 1;
+  width: 4px;
+  height: var(--spacing-2xl);
+  background-color: var(--color-primary);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: var(--spacing-xl);
+  padding-left: 20px;
+}

@@ -1,0 +1,33 @@
+@use '@/styles/mixins' as *;
+
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  list-style: none;
+
+  @include breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step,
+.card {
+  height: 100%;
+}
+
+.card {
+  padding: var(--spacing-lg) 20px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stepNumber {
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}

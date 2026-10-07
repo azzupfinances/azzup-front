@@ -1,0 +1,36 @@
+@use 'sass:map';
+@use './variables' as *;
+
+@mixin breakpoint-up($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin focus-ring {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Horizontal padding shared by every content panel, so edges line up across sections.
+@mixin panel-padding-inline {
+  padding-inline: var(--spacing-lg);
+
+  @include breakpoint-up(md) {
+    padding-inline: var(--spacing-xl);
+  }
+
+  @include breakpoint-up(lg) {
+    padding-inline: var(--spacing-3xl);
+  }
+
+  @include breakpoint-up(xl) {
+    padding-inline: 104px;
+  }
+}

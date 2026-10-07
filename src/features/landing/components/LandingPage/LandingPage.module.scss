@@ -1,0 +1,7 @@
+// Panels are separated by a 1px gap so the page background shows as grid lines.
+.page,
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--panel-gap);
+}

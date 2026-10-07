@@ -1,0 +1,67 @@
+@use '@/styles/mixins' as *;
+
+.link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+  padding-block: var(--spacing-3xl);
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--transition-base);
+  @include panel-padding-inline;
+
+  &:hover {
+    background-color: var(--color-surface);
+  }
+
+  &:hover .action {
+    gap: 20px;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    outline-offset: -2px;
+  }
+
+  @include breakpoint-up(md) {
+    flex-direction: row;
+    padding-block: 100px;
+    text-align: left;
+  }
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.action {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  transition: gap var(--transition-base);
+}
+
+.dots {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 420px;
+  height: 260px;
+  background-image: var(--pattern-dots);
+  background-size: 16px 16px;
+  mask-image: radial-gradient(ellipse at top right, #000 20%, transparent 70%);
+}

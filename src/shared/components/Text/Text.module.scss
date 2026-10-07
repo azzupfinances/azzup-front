@@ -1,0 +1,26 @@
+.text {
+  color: var(--text-color, var(--color-text));
+  font-weight: var(--font-weight-medium);
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+.sm {
+  font-size: var(--font-size-sm);
+}
+
+.md {
+  font-size: var(--font-size-md);
+}
+
+.lg {
+  font-size: var(--font-size-lg);
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.center {
+  text-align: center;
+}

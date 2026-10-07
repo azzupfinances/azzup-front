@@ -1,0 +1,39 @@
+@use '@/styles/mixins' as *;
+
+$track-width: 44px;
+$track-padding: 2px;
+$knob-size: 20px;
+
+.switch {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  width: $track-width;
+  height: $knob-size + $track-padding * 2;
+  padding: $track-padding;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--color-muted);
+  transition: background-color var(--transition-base);
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.knob {
+  width: $knob-size;
+  height: $knob-size;
+  border-radius: var(--radius-full);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base);
+}
+
+.checked {
+  background-color: var(--color-primary);
+
+  .knob {
+    transform: translateX($track-width - $knob-size - $track-padding * 2);
+  }
+}

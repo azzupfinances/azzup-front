@@ -1,0 +1,44 @@
+@use '@/styles/mixins' as *;
+
+.viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+
+  &:hover .track,
+  &:focus-within .track {
+    animation-play-state: paused;
+  }
+
+  @include reduced-motion {
+    overflow-x: auto;
+    mask-image: none;
+  }
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration) linear infinite;
+  will-change: transform;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+.group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.duplicate {
+  @include reduced-motion {
+    display: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

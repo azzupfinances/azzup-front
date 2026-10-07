@@ -1,0 +1,94 @@
+@use '@/styles/mixins' as *;
+
+.panel {
+  background: var(--gradient-hero);
+}
+
+.content {
+  display: grid;
+  gap: var(--spacing-xl);
+  padding-bottom: 0;
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-top: var(--spacing-3xl);
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  max-width: 620px;
+  padding-bottom: var(--spacing-lg);
+
+  @include breakpoint-up(lg) {
+    padding-block: var(--spacing-xl) var(--spacing-3xl);
+  }
+}
+
+.badgeDetail {
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.titleLine {
+  display: block;
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.primaryAction {
+  flex: 1;
+
+  @include breakpoint-up(sm) {
+    flex: none;
+  }
+}
+
+.secondaryAction {
+  display: none;
+
+  @include breakpoint-up(sm) {
+    display: inline-flex;
+  }
+}
+
+.highlights {
+  display: none;
+  gap: 12px;
+  margin-top: var(--spacing-xl);
+  list-style: none;
+
+  @include breakpoint-up(md) {
+    display: flex;
+  }
+}
+
+.highlight {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+}
+
+.highlightText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.highlightTitle {
+  color: var(--color-heading);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.highlightDescription {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}

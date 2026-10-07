@@ -1,0 +1,99 @@
+@use './mixins' as *;
+
+:root {
+  // Brand
+  --color-primary: #1d6fe8;
+  --color-accent: #a8cfff;
+  --color-accent-soft: #e6f0ff;
+  --color-on-accent: #0f2a4a;
+  --color-inverted: #0f2a4a;
+  --color-on-inverted: #ffffff;
+
+  // Neutrals
+  --color-page: #e2e7f1;
+  --color-background: #ffffff;
+  --color-surface: #f6f8fa;
+  --color-heading: #0f2a4a;
+  --color-text: #4c5267;
+  --color-muted: #7a8194;
+  --color-border: #e2e7f1;
+
+  // Gradients and patterns
+  --gradient-hero: radial-gradient(
+    200% 300% at -30% -60%,
+    rgb(255 255 255 / 0) 56%,
+    #a8cfff 71%,
+    #1d6fe8 100%
+  );
+  --gradient-highlight-sheen: linear-gradient(
+    105deg,
+    transparent 0 40%,
+    rgb(255 255 255 / 0.9) 50%,
+    transparent 60% 100%
+  );
+  --pattern-stripes: repeating-linear-gradient(
+    45deg,
+    rgb(226 231 241 / 0.8) 0 1px,
+    transparent 1px 14px
+  );
+  --pattern-dashed-line: repeating-linear-gradient(
+    180deg,
+    var(--color-border) 0 8px,
+    transparent 8px 16px
+  );
+  --pattern-dots: radial-gradient(rgb(15 42 74 / 0.14) 1.5px, transparent 1.5px);
+
+  // Typography
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
+  --font-size-4xl: 3.5rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --letter-spacing-tight: -0.04em;
+
+  // Shape
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  // Spacing
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 120px;
+
+  // Elevation
+  --shadow-sm: 0 1px 2px rgb(15 42 74 / 0.06);
+  --shadow-md: 0 7px 29px rgb(100 100 111 / 0.2);
+  --shadow-lg: -17px 16px 52px rgb(0 0 0 / 0.13);
+
+  // Motion
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+  --duration-reveal: 800ms;
+  --easing-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  // Layout
+  --content-max-width: 1200px;
+  --panel-gap: 1px;
+
+  @include breakpoint-up(xl) {
+    --content-max-width: 1520px;
+  }
+}

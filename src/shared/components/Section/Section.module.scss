@@ -1,0 +1,10 @@
+@use '@/styles/mixins' as *;
+
+.content {
+  padding-block: var(--spacing-3xl);
+  @include panel-padding-inline;
+
+  @include breakpoint-up(lg) {
+    padding-block: var(--spacing-4xl);
+  }
+}

@@ -1,0 +1,45 @@
+@use '@/styles/mixins' as *;
+
+.heading {
+  color: var(--heading-color, var(--color-heading));
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-tight);
+  text-wrap: balance;
+}
+
+.sm {
+  font-size: var(--font-size-xl);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.md {
+  font-size: var(--font-size-2xl);
+  line-height: 1.2;
+}
+
+.lg {
+  font-size: var(--font-size-2xl);
+  line-height: 1.2;
+
+  @include breakpoint-up(md) {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.xl {
+  font-size: var(--font-size-2xl);
+  line-height: 1.05;
+
+  @include breakpoint-up(md) {
+    font-size: var(--font-size-3xl);
+  }
+
+  @include breakpoint-up(xl) {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.center {
+  text-align: center;
+}

@@ -1,0 +1,62 @@
+@use '@/styles/mixins' as *;
+
+.content {
+  display: grid;
+  gap: var(--spacing-xl);
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  max-width: 468px;
+}
+
+.action {
+  width: fit-content;
+  margin-top: var(--spacing-xl);
+}
+
+.decoration {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  background-image: var(--pattern-dots);
+  background-size: 16px 16px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--spacing-md) 20px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-md);
+}
+
+.notificationText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notificationTitle {
+  color: var(--color-heading);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.notificationDescription {
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}

@@ -1,0 +1,76 @@
+@use '@/styles/mixins' as *;
+
+.row {
+  display: flex;
+  gap: var(--panel-gap);
+}
+
+.side {
+  display: none;
+  flex: 1 1 0;
+  background-color: var(--color-background);
+
+  &:first-child {
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  &:last-child {
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+  }
+
+  @include breakpoint-up(md) {
+    display: block;
+    min-width: var(--spacing-xl);
+  }
+
+  @include breakpoint-up(lg) {
+    min-width: 88px;
+  }
+
+  @include breakpoint-up(xl) {
+    min-width: 119px;
+  }
+}
+
+.stripedSides .side {
+  background-image: var(--pattern-stripes);
+}
+
+.center {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: var(--content-max-width);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.default {
+  background-color: var(--color-background);
+}
+
+.striped {
+  background-color: var(--color-background);
+  background-image: var(--pattern-stripes);
+}
+
+// Variants override the color variables consumed by Heading, Text, HighlightText and TextLink.
+.inverted {
+  --heading-color: var(--color-on-inverted);
+  --text-color: rgb(255 255 255 / 0.72);
+  --highlight-color: var(--color-accent);
+  --link-color: var(--color-accent);
+
+  background-color: var(--color-inverted);
+  color: var(--color-on-inverted);
+}
+
+.accent {
+  --heading-color: var(--color-on-accent);
+  --text-color: var(--color-on-accent);
+  --highlight-color: var(--color-primary);
+
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}

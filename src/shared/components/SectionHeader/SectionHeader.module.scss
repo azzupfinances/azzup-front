@@ -1,0 +1,13 @@
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  max-width: 720px;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.center {
+  align-items: center;
+  margin-inline: auto;
+}

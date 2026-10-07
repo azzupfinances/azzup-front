@@ -1,0 +1,21 @@
+@use '@/styles/mixins' as *;
+
+.reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition:
+    opacity var(--duration-reveal) var(--easing-reveal),
+    transform var(--duration-reveal) var(--easing-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+
+  @include reduced-motion {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.visible {
+  opacity: 1;
+  transform: none;
+}
