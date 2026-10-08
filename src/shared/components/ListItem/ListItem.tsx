@@ -1,4 +1,4 @@
-import type { LucideIcon } from 'lucide-react'
+import { ChevronRight, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 
@@ -28,6 +28,8 @@ export function ListItem({
   href,
   onClick,
 }: ListItemProps) {
+  const isInteractive = Boolean(href ?? onClick)
+
   const content = (
     <>
       {Icon && (
@@ -45,6 +47,8 @@ export function ListItem({
           {trailingDetail && <span className={styles.trailingDetail}>{trailingDetail}</span>}
         </span>
       )}
+      {/* Signals that the row opens something; static rows have no chevron. */}
+      {isInteractive && <ChevronRight size={18} className={styles.chevron} aria-hidden="true" />}
     </>
   )
 

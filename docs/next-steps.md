@@ -21,10 +21,44 @@ Done and verified with screenshots (375 / 768 / 1024 / 1280 / 1440 / 1920 px):
 - **Dark theme**, scoped to the system: `src/lib/theme/theme.ts`, `SystemThemeScope`
   (mounted by `src/app/azzup/layout.tsx`) and `ThemeToggle`.
 - **Design system catalog** at `/azzup/admin/design-system` (dev only for now).
+- **App shell** (`src/features/app-shell`): sidebar on desktop, top bar + bottom navigation
+  on phones, new transaction modal (simulated save).
+- **Início** (`/azzup/inicio`, `src/features/dashboard`): balance, payday, recent transactions,
+  upcoming bills, spending by category, with landing-style entrance animations.
+- **Extrato** (`/azzup/extrato`, `src/features/transactions`): month summary, search and
+  filters (type, category), list grouped by day, edit/delete in a modal (local only).
+  Statement import is not built yet; its button shows a "coming soon" toast.
+
+## Current phase: visual only
+
+Backend work is on hold. Build screens and components visually first:
+
+- No mock API, route handlers, React Query or session. Section 3 below is postponed.
+- Screens show static example content written directly in the UI; no data layer.
+- When a button has a behavior (open a modal, toggle, toast, switch tabs), implement it
+  and simulate the outcome locally instead of calling a service.
 
 ## Next steps (in order)
 
-### 1. Technical base
+### 1. App shell
+
+- [x] Phones: bottom navigation — Início · Extrato · **+** (new transaction) · Contas · Perfil.
+- [x] Desktop: sidebar in the style of the login showcase frame.
+- [x] Set `--toast-offset-bottom` so toasts sit above the bottom navigation.
+- [ ] `ThemeToggle` inside Perfil/configurações.
+
+### 2. Screens (Portuguese URLs, English code)
+
+| URL | Feature | Notes |
+| --- | --- | --- |
+| `/azzup/inicio` | `dashboard` | Month balance, income vs. expenses, left until payday, upcoming bills |
+| `/azzup/extrato` | `transactions` | List + filters (month, category, type), manual create/edit in a Modal |
+| `/azzup/extrato/importar` | `statement-import` | Upload OFX/CSV → preview → categorize → confirm |
+| `/azzup/contas` | `bills` | Fixed/recurring bills, due dates, paid/pending/overdue |
+| `/azzup/contas/nova`, `/azzup/contas/[id]/editar` | `bills` | Bill form |
+| `/azzup/perfil` | `settings` | Profile, payday, theme |
+
+### 3. Technical base (postponed)
 
 - [ ] `src/lib/config/`: read `NEXT_PUBLIC_API_URL` (defaults to the mock API).
 - [ ] `src/lib/api/`: `api-client.ts` (native fetch, JSON, auth header) and `api-error.ts`.
@@ -39,26 +73,6 @@ Done and verified with screenshots (375 / 768 / 1024 / 1280 / 1440 / 1920 px):
     design-system page), and logged-in users hitting `/login` go to the system.
   - Wire `LoginForm` / `RegisterForm` through `features/auth/services/auth.service.ts`
     and mutation hooks; show errors with `useToast`.
-
-### 2. App shell
-
-- [ ] Phones: bottom navigation — Início · Extrato · **+** (new transaction) · Contas · Perfil.
-- [ ] Desktop: sidebar in the style of the login showcase frame.
-- [ ] Set `--toast-offset-bottom` so toasts sit above the bottom navigation.
-- [ ] `ThemeToggle` inside Perfil/configurações.
-
-### 3. Screens (Portuguese URLs, English code)
-
-| URL | Feature | Notes |
-| --- | --- | --- |
-| `/azzup/inicio` | `dashboard` | Month balance, income vs. expenses, left until payday, upcoming bills |
-| `/azzup/extrato` | `transactions` | List + filters (month, category, type), manual create/edit in a Modal |
-| `/azzup/extrato/importar` | `statement-import` | Upload OFX/CSV → preview → categorize → confirm |
-| `/azzup/contas` | `bills` | Fixed/recurring bills, due dates, paid/pending/overdue |
-| `/azzup/contas/nova`, `/azzup/contas/[id]/editar` | `bills` | Bill form |
-| `/azzup/perfil` | `settings` | Profile, payday, theme |
-
-`/azzup/inicio` is a proposal (the user also mentioned `/azzup/dashboard`); confirm before building.
 
 ### Draft data contract
 

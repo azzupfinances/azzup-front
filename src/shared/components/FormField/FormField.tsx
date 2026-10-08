@@ -10,6 +10,8 @@ type FormFieldProps = {
   descriptionId: string
   hint?: string
   error?: string
+  // Keeps the label for screen readers when the placeholder already explains the field.
+  isLabelHidden?: boolean
   className?: string
   children: ReactNode
 }
@@ -22,6 +24,7 @@ export function FormField({
   descriptionId,
   hint,
   error,
+  isLabelHidden = false,
   className,
   children,
 }: FormFieldProps) {
@@ -29,7 +32,7 @@ export function FormField({
 
   return (
     <div className={classNames(styles.field, className)}>
-      <label htmlFor={controlId} className={styles.label}>
+      <label htmlFor={controlId} className={isLabelHidden ? 'sr-only' : styles.label}>
         {label}
       </label>
 

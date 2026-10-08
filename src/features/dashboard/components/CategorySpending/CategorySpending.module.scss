@@ -1,0 +1,92 @@
+@use '@/styles/mixins' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-background);
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-accent-soft);
+  color: var(--color-primary);
+}
+
+.details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.label {
+  color: var(--color-heading);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.bar {
+  flex: 1;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+
+  &::after {
+    content: '';
+    display: block;
+    width: var(--share);
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--color-primary);
+    transform-origin: left;
+  }
+}
+
+// Grows once the enclosing Reveal shows the panel, one category after another.
+:global([data-revealed='true']) .bar::after {
+  animation: grow-bar 900ms var(--easing-reveal) backwards;
+  animation-delay: calc(300ms + var(--index) * 90ms);
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes grow-bar {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.share {
+  width: 4ch;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-align: right;
+}

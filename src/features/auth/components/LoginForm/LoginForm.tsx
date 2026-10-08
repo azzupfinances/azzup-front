@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 // Google sign-in is disabled for now; keep this import with the commented-out button below.
 // import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 
 import { AuthPageHeader } from '@/features/auth/components/AuthPageHeader/AuthPageHeader'
@@ -11,11 +12,12 @@ import { CpfField } from '@/features/auth/components/CpfField/CpfField'
 import { loginFormSchema, type LoginFormValues } from '@/features/auth/schemas/login-form.schema'
 import { Button } from '@/shared/components/Button/Button'
 import { PasswordField } from '@/shared/components/PasswordField/PasswordField'
-import { FORGOT_PASSWORD_HREF } from '@/shared/constants/routes'
+import { FORGOT_PASSWORD_HREF, SYSTEM_HOME_HREF } from '@/shared/constants/routes'
 
 import styles from './LoginForm.module.scss'
 
 export function LoginForm() {
+  const router = useRouter()
   const {
     control,
     register,
@@ -28,7 +30,10 @@ export function LoginForm() {
   })
 
   // Pending backend integration: authenticate through the auth service and start the session.
-  function handleLogin(_values: LoginFormValues) {}
+  // Until then, any valid form goes straight into the system.
+  function handleLogin(_values: LoginFormValues) {
+    router.push(SYSTEM_HOME_HREF)
+  }
 
   // Google sign-in is disabled for now. Pending backend integration: start the Google OAuth flow.
   // function handleGoogleSignIn() {}

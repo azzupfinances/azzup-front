@@ -1,0 +1,185 @@
+@use '@/styles/mixins' as *;
+
+$chart-height: 160px;
+
+.chart {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  // 2px surface gap between adjacent bars at minimum; wider when there is room.
+  gap: 2px;
+  padding-top: var(--spacing-lg);
+  list-style: none;
+
+  @include breakpoint-up(sm) {
+    gap: var(--spacing-sm);
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-width: 0;
+  border-radius: var(--radius-sm);
+  outline: none;
+
+  &:focus-visible .track {
+    @include focus-ring;
+  }
+}
+
+.track {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: $chart-height;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.bar {
+  position: relative;
+  width: 100%;
+  max-width: 28px;
+  height: var(--height);
+  // Rounded data end, square at the baseline.
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background-color: var(--color-primary);
+  opacity: 0.75;
+  transform-origin: bottom;
+  transition: opacity var(--transition-fast);
+
+  .column:hover &,
+  .column:focus-visible & {
+    opacity: 1;
+  }
+}
+
+.isBest {
+  opacity: 1;
+}
+
+// Month in progress: same hue, hatched, so it reads as "not final yet".
+.isPartial {
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--color-primary) 0 3px,
+    transparent 3px 6px
+  );
+  box-shadow: inset 0 0 0 1.5px var(--color-primary);
+  opacity: 1;
+}
+
+.futureBar {
+  width: 100%;
+  max-width: 28px;
+  height: 8px;
+  border: 1px dashed var(--color-border);
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.directLabel {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  color: var(--color-heading);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.monthLabel {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-medium);
+  text-transform: capitalize;
+  white-space: nowrap;
+
+  @include breakpoint-up(sm) {
+    font-size: var(--font-size-xs);
+  }
+}
+
+.isMuted {
+  color: var(--color-muted);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + var(--spacing-sm));
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-inverted);
+  color: var(--color-on-inverted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
+
+  .column:hover &,
+  .column:focus-visible & {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  // Edge months open inward so the tooltip never leaves the card.
+  .column:nth-child(-n + 2) & {
+    left: 0;
+    transform: translate(0, 4px);
+  }
+
+  .column:nth-child(-n + 2):hover &,
+  .column:nth-child(-n + 2):focus-visible & {
+    transform: translate(0, 0);
+  }
+
+  .column:nth-last-child(-n + 2) & {
+    right: 0;
+    left: auto;
+    transform: translate(0, 4px);
+  }
+
+  .column:nth-last-child(-n + 2):hover &,
+  .column:nth-last-child(-n + 2):focus-visible & {
+    transform: translate(0, 0);
+  }
+}
+
+.tooltipMonth {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-medium);
+  text-transform: capitalize;
+}
+
+// Bars grow one month after another once the enclosing Reveal shows the chart.
+:global([data-revealed='true']) .bar {
+  animation: grow-bar 800ms var(--easing-reveal) backwards;
+  animation-delay: calc(300ms + var(--index) * 60ms);
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes grow-bar {
+  from {
+    transform: scaleY(0);
+  }
+}

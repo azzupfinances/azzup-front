@@ -16,7 +16,7 @@ import {
   SPENDING_CHART_WIDTH,
   SPENDING_CHART_Y_LABELS,
 } from '@/features/auth/constants/auth-showcase'
-import { useCountUp } from '@/features/auth/hooks/useCountUp'
+import { useCountUp } from '@/shared/hooks/useCountUp'
 import type { Trend } from '@/features/auth/types/auth-showcase.types'
 import { classNames } from '@/shared/utils/class-names'
 

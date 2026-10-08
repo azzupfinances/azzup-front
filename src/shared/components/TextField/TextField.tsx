@@ -9,6 +9,7 @@ type TextFieldProps = Omit<ComponentProps<'input'>, 'className' | 'id'> & {
   label: string
   hint?: string
   error?: string
+  isLabelHidden?: boolean
   startAdornment?: ReactNode
   endAdornment?: ReactNode
   className?: string
@@ -18,6 +19,7 @@ export function TextField({
   label,
   hint,
   error,
+  isLabelHidden,
   startAdornment,
   endAdornment,
   className,
@@ -34,6 +36,7 @@ export function TextField({
       descriptionId={descriptionId}
       hint={hint}
       error={error}
+      isLabelHidden={isLabelHidden}
       className={className}
     >
       <div className={classNames(styles.control, error && styles.hasError)}>

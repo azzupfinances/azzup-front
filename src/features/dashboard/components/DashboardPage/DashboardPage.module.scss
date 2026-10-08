@@ -1,0 +1,63 @@
+@use '@/styles/mixins' as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+// Phones stack everything by priority; larger screens put the summaries on top
+// and the lists side by side.
+.grid {
+  display: grid;
+  grid-template-areas:
+    'balance'
+    'payday'
+    'bills'
+    'transactions'
+    'categories';
+  align-items: start;
+  gap: var(--spacing-lg);
+
+  @include breakpoint-up(md) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'balance balance'
+      'payday bills'
+      'transactions transactions'
+      'categories categories';
+  }
+
+  @include breakpoint-up(xl) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-areas:
+      'balance payday'
+      'transactions bills'
+      'transactions categories';
+  }
+}
+
+.balance {
+  grid-area: balance;
+}
+
+.payday {
+  grid-area: payday;
+}
+
+.transactions {
+  grid-area: transactions;
+}
+
+.bills {
+  grid-area: bills;
+}
+
+.categories {
+  grid-area: categories;
+}
+
+// Shorter cycle than the landing title, so the sheen crosses the name soon after load.
+.name.name {
+  animation-duration: 6s;
+}

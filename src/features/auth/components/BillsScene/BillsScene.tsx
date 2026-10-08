@@ -7,7 +7,7 @@ import {
   EMERGENCY_FUND_PERCENTAGE,
   TRANSACTION_ITEMS,
 } from '@/features/auth/constants/auth-showcase'
-import { useCountUp } from '@/features/auth/hooks/useCountUp'
+import { useCountUp } from '@/shared/hooks/useCountUp'
 import { classNames } from '@/shared/utils/class-names'
 
 import styles from './BillsScene.module.scss'

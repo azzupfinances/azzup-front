@@ -1,0 +1,168 @@
+@use '@/styles/mixins' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  position: relative;
+  isolation: isolate;
+  padding: var(--spacing-lg);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background-color: var(--color-inverted);
+  color: var(--color-on-inverted);
+  box-shadow: var(--shadow-md);
+
+  @include breakpoint-up(md) {
+    padding: var(--spacing-xl);
+  }
+
+  // Slow drifting glow so the hero card never feels frozen.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -40% -20% auto auto;
+    z-index: -1;
+    width: 80%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-full);
+    background: radial-gradient(circle, rgb(168 207 255 / 0.3) 0%, transparent 65%);
+    animation: glow-drift 9s ease-in-out infinite alternate;
+  }
+
+  @include reduced-motion {
+    &::before {
+      animation: none;
+    }
+  }
+}
+
+// Blur-in used when values appear or are hidden.
+.swap {
+  animation: value-in 400ms var(--easing-reveal);
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes glow-drift {
+  to {
+    transform: translate(-18%, 22%) scale(1.15);
+  }
+}
+
+@keyframes value-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  color: var(--color-on-inverted-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.visibilityToggle {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: rgb(255 255 255 / 0.1);
+  color: var(--color-on-inverted);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: rgb(255 255 255 / 0.18);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.balance {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+// Doubled class so it wins over the Money module regardless of stylesheet order.
+.balanceValue.balanceValue,
+.hiddenBalance {
+  color: var(--color-on-inverted);
+
+  > span {
+    color: var(--color-on-inverted-muted);
+  }
+}
+
+.hiddenBalance {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.1;
+}
+
+.trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-accent);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.flows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-md);
+  margin-top: auto;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgb(255 255 255 / 0.13);
+}
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.flowLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-on-inverted-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.flowIcon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.flowValue {
+  color: var(--color-on-inverted);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.flowMoney.flowMoney {
+  color: inherit;
+  font-size: inherit;
+}

@@ -1,0 +1,85 @@
+@use '@/styles/mixins' as *;
+
+.card {
+  display: grid;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(90% 160% at 100% 0%, rgb(168 207 255 / 0.25) 0%, transparent 55%),
+    var(--color-inverted);
+  color: var(--color-on-inverted);
+  box-shadow: var(--shadow-md);
+
+  @include breakpoint-up(md) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    padding: var(--spacing-xl);
+  }
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.label,
+.share {
+  color: var(--color-on-inverted-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+// Doubled classes so they win over the Money module regardless of stylesheet order.
+.savedValue.savedValue {
+  color: var(--color-on-inverted);
+
+  > span {
+    color: var(--color-on-inverted-muted);
+  }
+}
+
+.flows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgb(255 255 255 / 0.13);
+
+  @include breakpoint-up(md) {
+    gap: var(--spacing-xl);
+    padding-top: 0;
+    padding-left: var(--spacing-xl);
+    border-top: none;
+    border-left: 1px solid rgb(255 255 255 / 0.13);
+  }
+}
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.flowLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-on-inverted-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.flowIcon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.flowValue.flowValue {
+  color: var(--color-on-inverted);
+}

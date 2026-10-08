@@ -97,3 +97,14 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
 }
+
+.chevron {
+  flex-shrink: 0;
+  margin-left: calc(var(--spacing-xs) * -1);
+  color: var(--color-muted);
+  transition: transform var(--transition-fast);
+}
+
+.interactive:hover .chevron {
+  transform: translateX(2px);
+}

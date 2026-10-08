@@ -43,6 +43,8 @@ export function Reveal({ delay = 0, className, children }: RevealProps) {
     <div
       ref={elementRef}
       className={classNames(styles.reveal, isVisible && styles.visible, className)}
+      // Lets children start their own animations (e.g. growing bars) only once revealed.
+      data-revealed={isVisible}
       style={{ '--reveal-delay': `${delay}ms` } as CSSProperties}
     >
       {children}

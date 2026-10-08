@@ -1,0 +1,56 @@
+@use '@/styles/mixins' as *;
+
+.shell {
+  --bottom-nav-height: 64px;
+
+  min-height: 100vh;
+
+  @include breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+  }
+}
+
+// Keeps toasts above the bottom navigation while the shell is on screen.
+:global(:root):has(.shell) {
+  --toast-offset-bottom: calc(64px + env(safe-area-inset-bottom));
+
+  @include breakpoint-up(lg) {
+    --toast-offset-bottom: 0px;
+  }
+}
+
+.sidebar {
+  display: none;
+
+  @include breakpoint-up(lg) {
+    display: block;
+  }
+}
+
+.body {
+  min-width: 0;
+}
+
+.topBar,
+.bottomNav {
+  @include breakpoint-up(lg) {
+    display: none;
+  }
+}
+
+.main {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding: var(--spacing-lg) var(--spacing-md)
+    calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + var(--spacing-xl));
+
+  @include breakpoint-up(md) {
+    padding-inline: var(--spacing-xl);
+  }
+
+  @include breakpoint-up(lg) {
+    padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-2xl);
+  }
+}

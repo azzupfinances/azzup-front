@@ -1,0 +1,36 @@
+.bottomNav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: calc(var(--z-overlay) - 1);
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-background);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  height: var(--bottom-nav-height);
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+
+  > * {
+    flex: 1;
+  }
+}
+
+// The raised button keeps its own size instead of stretching like the tabs.
+.item:nth-child(3) {
+  align-items: flex-start;
+
+  > * {
+    flex: none;
+  }
+}

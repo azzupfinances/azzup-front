@@ -1,0 +1,11 @@
+.explorer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
