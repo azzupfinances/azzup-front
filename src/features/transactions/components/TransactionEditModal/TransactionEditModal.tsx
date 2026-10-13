@@ -26,6 +26,10 @@ function toFormValues(transaction: Transaction): TransactionFormValues {
     description: transaction.description,
     categoryId: transaction.categoryId,
     date: transaction.date,
+    // Statement entries carry no payment details yet; the form keeps these fields hidden.
+    paymentMethod: 'other',
+    creditCardId: '',
+    installmentsCount: 1,
   }
 }
 

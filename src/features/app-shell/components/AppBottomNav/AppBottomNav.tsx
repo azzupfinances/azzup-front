@@ -4,18 +4,19 @@ import { NAVIGATION_ITEMS, type NavigationItem } from '@/features/app-shell/cons
 
 import styles from './AppBottomNav.module.scss'
 
-const middleIndex = Math.ceil(NAVIGATION_ITEMS.length / 2)
+const BOTTOM_NAV_ITEMS = NAVIGATION_ITEMS.filter((item) => item.isInBottomNav)
+const middleIndex = Math.ceil(BOTTOM_NAV_ITEMS.length / 2)
 
 // Phone and tablet navigation (below `lg`): two tabs, the new transaction button, two tabs.
 export function AppBottomNav() {
   return (
     <nav className={styles.bottomNav} aria-label="Menu principal">
       <ul className={styles.list}>
-        {NAVIGATION_ITEMS.slice(0, middleIndex).map(renderTab)}
+        {BOTTOM_NAV_ITEMS.slice(0, middleIndex).map(renderTab)}
         <li className={styles.item}>
           <NewTransactionButton variant="fab" />
         </li>
-        {NAVIGATION_ITEMS.slice(middleIndex).map(renderTab)}
+        {BOTTOM_NAV_ITEMS.slice(middleIndex).map(renderTab)}
       </ul>
     </nav>
   )

@@ -6,8 +6,9 @@ import { useId, useState } from 'react'
 import { Button } from '@/shared/components/Button/Button'
 import { Modal } from '@/shared/components/Modal/Modal'
 import { TransactionForm } from '@/shared/components/TransactionForm/TransactionForm'
+import { useCreditCards } from '@/shared/hooks/useCreditCards'
 import { useToast } from '@/shared/hooks/useToast'
-import type { TransactionFormValues } from '@/shared/schemas/transaction-form.schema'
+import { isCardPurchase, type TransactionFormValues } from '@/shared/schemas/transaction-form.schema'
 import { formatCurrency } from '@/shared/utils/format-currency'
 import { getTodayIsoDate } from '@/shared/utils/iso-date'
 
@@ -23,6 +24,7 @@ export function NewTransactionButton({ variant }: NewTransactionButtonProps) {
   const [defaultValues, setDefaultValues] = useState<TransactionFormValues | null>(null)
   const formId = useId()
   const { showToast } = useToast()
+  const { creditCards, createPurchase } = useCreditCards()
 
   function handleOpen() {
     setDefaultValues({
@@ -31,6 +33,9 @@ export function NewTransactionButton({ variant }: NewTransactionButtonProps) {
       description: '',
       categoryId: 'food',
       date: getTodayIsoDate(),
+      paymentMethod: 'other',
+      creditCardId: creditCards[0]?.id ?? '',
+      installmentsCount: 1,
     })
     setIsOpen(true)
   }
@@ -38,10 +43,37 @@ export function NewTransactionButton({ variant }: NewTransactionButtonProps) {
   // Pending backend integration: create the transaction through the transactions service.
   function handleSubmit(values: TransactionFormValues) {
     setIsOpen(false)
+
+    if (isCardPurchase(values)) {
+      handleCreateCardPurchase(values)
+      return
+    }
+
     showToast({
       tone: 'success',
       title: values.type === 'expense' ? 'Despesa adicionada' : 'Receita adicionada',
       description: `${values.description} · ${formatCurrency(values.amountInCents)}`,
+    })
+  }
+
+  // Card purchases are kept in memory so the card summaries pick them up right away.
+  function handleCreateCardPurchase(values: TransactionFormValues) {
+    const creditCard = creditCards.find((card) => card.id === values.creditCardId)
+    const installmentsLabel = values.installmentsCount > 1 ? `em ${values.installmentsCount}x` : 'à vista'
+
+    createPurchase({
+      creditCardId: values.creditCardId,
+      description: values.description,
+      categoryId: values.categoryId,
+      totalInCents: values.amountInCents,
+      installmentsCount: values.installmentsCount,
+      purchaseDate: values.date,
+    })
+
+    showToast({
+      tone: 'success',
+      title: values.installmentsCount > 1 ? 'Compra parcelada adicionada' : 'Compra no cartão adicionada',
+      description: `${values.description} · ${formatCurrency(values.amountInCents)} ${installmentsLabel} no ${creditCard?.name ?? 'cartão'}`,
     })
   }
 
@@ -76,7 +108,12 @@ export function NewTransactionButton({ variant }: NewTransactionButtonProps) {
       >
         {/* Mounted only while open, so every opening starts with a clean form. */}
         {isOpen && defaultValues && (
-          <TransactionForm formId={formId} defaultValues={defaultValues} onSubmit={handleSubmit} />
+          <TransactionForm
+            formId={formId}
+            defaultValues={defaultValues}
+            onSubmit={handleSubmit}
+            creditCards={creditCards}
+          />
         )}
       </Modal>
     </>

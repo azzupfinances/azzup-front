@@ -7,5 +7,6 @@ export const SYSTEM_HREF = '/azzup'
 export const SYSTEM_HOME_HREF = `${SYSTEM_HREF}/inicio`
 export const TRANSACTIONS_HREF = `${SYSTEM_HREF}/extrato`
 export const BILLS_HREF = `${SYSTEM_HREF}/contas`
+export const CREDIT_CARDS_HREF = `${SYSTEM_HREF}/cartoes`
 export const PROFILE_HREF = `${SYSTEM_HREF}/perfil`
 export const YEAR_OVERVIEW_HREF = `${SYSTEM_HOME_HREF}/ano`

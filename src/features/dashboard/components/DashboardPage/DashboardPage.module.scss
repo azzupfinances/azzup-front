@@ -13,6 +13,7 @@
   grid-template-areas:
     'balance'
     'payday'
+    'creditCards'
     'bills'
     'transactions'
     'categories';
@@ -23,6 +24,7 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
       'balance balance'
+      'creditCards creditCards'
       'payday bills'
       'transactions transactions'
       'categories categories';
@@ -32,6 +34,7 @@
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     grid-template-areas:
       'balance payday'
+      'creditCards creditCards'
       'transactions bills'
       'transactions categories';
   }
@@ -43,6 +46,10 @@
 
 .payday {
   grid-area: payday;
+}
+
+.creditCards {
+  grid-area: creditCards;
 }
 
 .transactions {

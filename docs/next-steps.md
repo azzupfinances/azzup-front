@@ -29,6 +29,17 @@ Done and verified with screenshots (375 / 768 / 1024 / 1280 / 1440 / 1920 px):
   filters (type, category), list grouped by day, edit/delete in a modal (local only).
   Statement import is not built yet; its button shows a "coming soon" toast.
 
+- **Cartões** (`/azzup/cartoes`, `src/features/credit-cards`): create/edit/remove cards (name,
+  limit, due day) and the detail of every purchase still being paid. Card purchases are entered
+  in the new transaction modal (payment method Cartão/Outro, card, installments).
+  - Calculations live in `src/shared/utils/installments.ts` and `credit-card-summary.ts`
+    (integer cents; installments always add up to the total; dates keep the purchase day,
+    clamped to the month's last day). Totals are never stored, always calculated.
+  - Paid rule for now (no bill cycles): an installment is paid once its month is over.
+  - Cards and purchases live in memory in `CreditCardsProvider` (mounted by the `(app)` layout)
+    and reset on reload. `CreditCardsOverview` shows one summary card per card on Início and Extrato.
+  - Cartões is in the sidebar only; on phones it is reached from the overview link.
+
 ## Current phase: visual only
 
 Backend work is on hold. Build screens and components visually first:

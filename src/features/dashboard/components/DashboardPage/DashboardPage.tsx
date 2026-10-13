@@ -7,6 +7,7 @@ import { RecentTransactions } from '@/features/dashboard/components/RecentTransa
 import { UpcomingBills } from '@/features/dashboard/components/UpcomingBills/UpcomingBills'
 import { SAMPLE_CATEGORY_SPENDING, SAMPLE_USER_FIRST_NAME } from '@/features/dashboard/constants/dashboard-sample'
 import { Button } from '@/shared/components/Button/Button'
+import { CreditCardsOverview } from '@/shared/components/CreditCardsOverview/CreditCardsOverview'
 import { HighlightText } from '@/shared/components/HighlightText/HighlightText'
 import { PageHeader } from '@/shared/components/PageHeader/PageHeader'
 import { PeriodSwitcher } from '@/shared/components/PeriodSwitcher/PeriodSwitcher'
@@ -46,6 +47,9 @@ export function DashboardPage() {
         </Reveal>
         <Reveal delay={200} className={styles.payday}>
           <PaydayCard />
+        </Reveal>
+        <Reveal delay={300} className={styles.creditCards}>
+          <CreditCardsOverview />
         </Reveal>
         <Reveal delay={300} className={styles.transactions}>
           <RecentTransactions />
