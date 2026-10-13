@@ -12,6 +12,7 @@ import {
   SAMPLE_TRANSACTIONS,
 } from '@/features/transactions/constants/transactions-sample'
 import type { Transaction } from '@/features/transactions/types/transaction.types'
+import { getMonthCardInstallments } from '@/features/transactions/utils/card-installments'
 import {
   filterTransactions,
   groupTransactionsByDay,
@@ -19,6 +20,7 @@ import {
 } from '@/features/transactions/utils/transaction-list'
 import { Button } from '@/shared/components/Button/Button'
 import { EmptyState } from '@/shared/components/EmptyState/EmptyState'
+import { useCreditCards } from '@/shared/hooks/useCreditCards'
 import { useTodayIsoDate } from '@/shared/hooks/useTodayIsoDate'
 import { useToast } from '@/shared/hooks/useToast'
 
@@ -32,9 +34,14 @@ export function TransactionsExplorer() {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
   const todayIsoDate = useTodayIsoDate()
   const { showToast } = useToast()
+  const { creditCards, purchases } = useCreditCards()
 
-  const summary = summarizeTransactions(transactions)
-  const dayGroups = groupTransactionsByDay(filterTransactions(transactions, filters))
+  // Card installments of the month join the list; they need "today", known only in the browser.
+  const monthTransactions = todayIsoDate
+    ? [...transactions, ...getMonthCardInstallments(purchases, todayIsoDate)]
+    : transactions
+  const summary = summarizeTransactions(monthTransactions)
+  const dayGroups = groupTransactionsByDay(filterTransactions(monthTransactions, filters))
 
   // Pending backend integration: update through the transactions service.
   function handleSave(updatedTransaction: Transaction) {
@@ -56,7 +63,7 @@ export function TransactionsExplorer() {
     <div className={styles.explorer}>
       <TransactionsSummary {...summary} />
 
-      <TransactionFilters filters={filters} onFiltersChange={setFilters} />
+      <TransactionFilters filters={filters} creditCards={creditCards} onFiltersChange={setFilters} />
 
       {dayGroups.length > 0 ? (
         <div className={styles.groups}>
@@ -65,6 +72,7 @@ export function TransactionsExplorer() {
               key={group.date}
               group={group}
               todayIsoDate={todayIsoDate}
+              creditCards={creditCards}
               onTransactionClick={setSelectedTransaction}
             />
           ))}

@@ -7,6 +7,7 @@ import { CurrencyField } from '@/shared/components/CurrencyField/CurrencyField'
 import { SegmentedControl } from '@/shared/components/SegmentedControl/SegmentedControl'
 import { Select } from '@/shared/components/Select/Select'
 import { TextField } from '@/shared/components/TextField/TextField'
+import { PAYMENT_METHODS } from '@/shared/constants/payment-methods'
 import { TRANSACTION_CATEGORIES } from '@/shared/constants/transaction-categories'
 import {
   MAX_INSTALLMENTS_COUNT,
@@ -24,10 +25,13 @@ const TYPE_OPTIONS = [
   { value: 'income' as const, label: 'Receita' },
 ]
 
-const PAYMENT_METHOD_OPTIONS = [
-  { value: 'card' as const, label: 'Cartão' },
-  { value: 'other' as const, label: 'Outro' },
-]
+const PAYMENT_METHOD_OPTIONS = Object.values(PAYMENT_METHODS).map((method) => ({
+  value: method.id,
+  label: method.label,
+}))
+
+// Editing a statement entry cannot turn it into a card purchase (that creates installments).
+const NON_CARD_PAYMENT_METHOD_OPTIONS = PAYMENT_METHOD_OPTIONS.filter((option) => option.value !== 'creditCard')
 
 const CATEGORY_OPTIONS = Object.values(TRANSACTION_CATEGORIES).map((category) => ({
   value: category.id,
@@ -59,8 +63,8 @@ type TransactionFormProps = {
   formId: string
   defaultValues: TransactionFormValues
   onSubmit: (values: TransactionFormValues) => void
-  // Payment fields (card + installments) are shown only when cards are passed, i.e. for
-  // new entries. Statement entries being edited keep them hidden.
+  // Credit card is offered only when cards are passed, i.e. for new entries. Statement
+  // entries being edited can switch between the other payment methods.
   creditCards?: CreditCard[]
 }
 
@@ -79,8 +83,7 @@ export function TransactionForm({ formId, defaultValues, onSubmit, creditCards }
     control,
     name: ['type', 'paymentMethod', 'amountInCents', 'installmentsCount'],
   })
-  const hasPaymentFields = creditCards !== undefined && type === 'expense'
-  const hasCreditCards = creditCards !== undefined && creditCards.length > 0
+  const canUseCreditCard = creditCards !== undefined && creditCards.length > 0
 
   return (
     <form id={formId} className={styles.form} noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -129,53 +132,40 @@ export function TransactionForm({ formId, defaultValues, onSubmit, creditCards }
         <TextField label="Data" type="date" error={errors.date?.message} {...register('date')} />
       </div>
 
-      {hasPaymentFields && !hasCreditCards && (
-        <p className={styles.note}>Para lançar no cartão de crédito, cadastre um cartão na tela Cartões.</p>
+      {type === 'expense' && (
+        <Select
+          label="Forma de pagamento"
+          options={canUseCreditCard ? PAYMENT_METHOD_OPTIONS : NON_CARD_PAYMENT_METHOD_OPTIONS}
+          hint={
+            creditCards?.length === 0
+              ? 'Para lançar no cartão de crédito, cadastre um cartão na tela Cartões.'
+              : undefined
+          }
+          error={errors.paymentMethod?.message}
+          {...register('paymentMethod')}
+        />
       )}
 
-      {hasPaymentFields && hasCreditCards && (
-        <div className={styles.payment}>
-          {/* Visual label only: the segmented control already names itself for screen readers. */}
-          <p className={styles.paymentLabel} aria-hidden="true">
-            Forma de pagamento
-          </p>
-
-          <Controller
-            name="paymentMethod"
-            control={control}
-            render={({ field }) => (
-              <SegmentedControl
-                label="Forma de pagamento"
-                options={PAYMENT_METHOD_OPTIONS}
-                value={field.value}
-                onValueChange={field.onChange}
-                isFullWidth
-              />
-            )}
+      {type === 'expense' && canUseCreditCard && paymentMethod === 'creditCard' && (
+        <div className={styles.row}>
+          <Select
+            label="Qual cartão"
+            placeholder="Escolha o cartão"
+            options={creditCards.map((creditCard) => ({ value: creditCard.id, label: creditCard.name }))}
+            error={errors.creditCardId?.message}
+            {...register('creditCardId')}
           />
-
-          {paymentMethod === 'card' && (
-            <div className={styles.row}>
-              <Select
-                label="Qual cartão"
-                placeholder="Escolha o cartão"
-                options={creditCards.map((creditCard) => ({ value: creditCard.id, label: creditCard.name }))}
-                error={errors.creditCardId?.message}
-                {...register('creditCardId')}
-              />
-              <Select
-                label="Parcelas"
-                options={INSTALLMENT_OPTIONS}
-                hint={
-                  installmentsCount > 1 && amountInCents > 0
-                    ? describeInstallments(amountInCents, installmentsCount)
-                    : undefined
-                }
-                error={errors.installmentsCount?.message}
-                {...register('installmentsCount', { valueAsNumber: true })}
-              />
-            </div>
-          )}
+          <Select
+            label="Parcelas"
+            options={INSTALLMENT_OPTIONS}
+            hint={
+              installmentsCount > 1 && amountInCents > 0
+                ? describeInstallments(amountInCents, installmentsCount)
+                : undefined
+            }
+            error={errors.installmentsCount?.message}
+            {...register('installmentsCount', { valueAsNumber: true })}
+          />
         </div>
       )}
     </form>

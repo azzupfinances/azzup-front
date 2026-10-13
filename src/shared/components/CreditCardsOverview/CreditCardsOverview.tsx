@@ -15,7 +15,7 @@ import { summarizeCreditCard } from '@/shared/utils/credit-card-summary'
 
 import styles from './CreditCardsOverview.module.scss'
 
-// One summary card per credit card (never a single total), shown on Início and Extrato.
+// One summary card per credit card (never a single total), shown on Início.
 export function CreditCardsOverview() {
   const { creditCards, purchases } = useCreditCards()
   const todayIsoDate = useTodayIsoDate()

@@ -1,7 +1,10 @@
 import type { Transaction, TransactionDayGroup as DayGroup } from '@/features/transactions/types/transaction.types'
 import { List } from '@/shared/components/List/List'
 import { Money } from '@/shared/components/Money/Money'
+import { getPaymentLabel } from '@/features/transactions/utils/card-installments'
 import { TransactionListItem } from '@/shared/components/TransactionListItem/TransactionListItem'
+import { CREDIT_CARDS_HREF } from '@/shared/constants/routes'
+import type { CreditCard } from '@/shared/types/credit-card.types'
 import { addDaysToIsoDate, parseIsoDate } from '@/shared/utils/iso-date'
 
 import styles from './TransactionDayGroup.module.scss'
@@ -24,10 +27,16 @@ type TransactionDayGroupProps = {
   group: DayGroup
   // `null` before hydration: days show their full date until "today" is known.
   todayIsoDate: string | null
+  creditCards: CreditCard[]
   onTransactionClick: (transaction: Transaction) => void
 }
 
-export function TransactionDayGroup({ group, todayIsoDate, onTransactionClick }: TransactionDayGroupProps) {
+export function TransactionDayGroup({
+  group,
+  todayIsoDate,
+  creditCards,
+  onTransactionClick,
+}: TransactionDayGroupProps) {
   const dayLabel = getDayLabel(group.date, todayIsoDate)
 
   return (
@@ -44,7 +53,10 @@ export function TransactionDayGroup({ group, todayIsoDate, onTransactionClick }:
             description={transaction.description}
             categoryId={transaction.categoryId}
             amountInCents={transaction.amountInCents}
-            onClick={() => onTransactionClick(transaction)}
+            paymentLabel={getPaymentLabel(transaction, creditCards)}
+            // Installments belong to a card purchase, so they open the card details instead.
+            href={transaction.cardInstallment ? CREDIT_CARDS_HREF : undefined}
+            onClick={transaction.cardInstallment ? undefined : () => onTransactionClick(transaction)}
           />
         ))}
       </List>

@@ -1,6 +1,5 @@
 import { ImportStatementButton } from '@/features/transactions/components/ImportStatementButton/ImportStatementButton'
 import { TransactionsExplorer } from '@/features/transactions/components/TransactionsExplorer/TransactionsExplorer'
-import { CreditCardsOverview } from '@/shared/components/CreditCardsOverview/CreditCardsOverview'
 import { PageHeader } from '@/shared/components/PageHeader/PageHeader'
 import { PeriodSwitcher } from '@/shared/components/PeriodSwitcher/PeriodSwitcher'
 import { Reveal } from '@/shared/components/Reveal/Reveal'
@@ -24,10 +23,6 @@ export function TransactionsPage() {
       </Reveal>
 
       <Reveal delay={100}>
-        <CreditCardsOverview />
-      </Reveal>
-
-      <Reveal delay={200}>
         <TransactionsExplorer />
       </Reveal>
     </div>

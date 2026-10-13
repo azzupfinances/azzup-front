@@ -33,7 +33,7 @@ export function NewTransactionButton({ variant }: NewTransactionButtonProps) {
       description: '',
       categoryId: 'food',
       date: getTodayIsoDate(),
-      paymentMethod: 'other',
+      paymentMethod: 'pix',
       creditCardId: creditCards[0]?.id ?? '',
       installmentsCount: 1,
     })

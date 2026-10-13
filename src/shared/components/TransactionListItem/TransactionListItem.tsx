@@ -11,6 +11,9 @@ type TransactionListItemProps = {
   // Negative = expense, positive = income.
   amountInCents: number
   dateLabel?: ReactNode
+  // E.g. "Pix" or "Nubank · 5/10", shown after the category.
+  paymentLabel?: string
+  href?: string
   onClick?: () => void
 }
 
@@ -20,19 +23,23 @@ export function TransactionListItem({
   categoryId,
   amountInCents,
   dateLabel,
+  paymentLabel,
+  href,
   onClick,
 }: TransactionListItemProps) {
   const category = TRANSACTION_CATEGORIES[categoryId]
   const isIncome = amountInCents > 0
+  const kindLabel = isIncome ? 'Receita' : category.label
 
   return (
     <ListItem
       icon={isIncome ? Wallet : category.icon}
       iconTone={isIncome ? 'success' : 'default'}
       title={description}
-      description={isIncome ? 'Receita' : category.label}
+      description={paymentLabel ? `${kindLabel} · ${paymentLabel}` : kindLabel}
       trailing={<Money amountInCents={amountInCents} size="sm" tone="signed" />}
       trailingDetail={dateLabel}
+      href={href}
       onClick={onClick}
     />
   )

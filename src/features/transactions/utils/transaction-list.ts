@@ -1,4 +1,5 @@
 import type {
+  PaymentFilter,
   Transaction,
   TransactionDayGroup,
   TransactionsFilters,
@@ -11,6 +12,18 @@ function normalizeText(text: string) {
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
     .trim()
+}
+
+function matchesPaymentFilter(transaction: Transaction, payment: PaymentFilter) {
+  if (payment.kind === 'method') {
+    return transaction.paymentMethodId === payment.paymentMethodId
+  }
+
+  if (payment.kind === 'card') {
+    return transaction.cardInstallment?.creditCardId === payment.creditCardId
+  }
+
+  return true
 }
 
 export function filterTransactions(transactions: Transaction[], filters: TransactionsFilters) {
@@ -26,6 +39,10 @@ export function filterTransactions(transactions: Transaction[], filters: Transac
     }
 
     if (filters.categoryId !== 'all' && transaction.categoryId !== filters.categoryId) {
+      return false
+    }
+
+    if (!matchesPaymentFilter(transaction, filters.payment)) {
       return false
     }
 

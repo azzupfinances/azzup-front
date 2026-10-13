@@ -26,8 +26,8 @@ function toFormValues(transaction: Transaction): TransactionFormValues {
     description: transaction.description,
     categoryId: transaction.categoryId,
     date: transaction.date,
-    // Statement entries carry no payment details yet; the form keeps these fields hidden.
-    paymentMethod: 'other',
+    // Income has no payment method; Pix is just the starting value if it becomes an expense.
+    paymentMethod: transaction.paymentMethodId ?? 'pix',
     creditCardId: '',
     installmentsCount: 1,
   }
@@ -47,6 +47,7 @@ export function TransactionEditModal({ transaction, onClose, onSave, onDelete }:
       amountInCents: values.type === 'expense' ? -values.amountInCents : values.amountInCents,
       categoryId: values.categoryId,
       date: values.date,
+      paymentMethodId: values.type === 'expense' ? values.paymentMethod : undefined,
     })
   }
 
