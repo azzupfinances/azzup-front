@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 import { NavLink } from '@/features/app-shell/components/NavLink/NavLink'
 import { NewTransactionButton } from '@/features/app-shell/components/NewTransactionButton/NewTransactionButton'
-import { UserAvatar } from '@/features/app-shell/components/UserAvatar/UserAvatar'
-import { CURRENT_USER, NAVIGATION_ITEMS } from '@/features/app-shell/constants/navigation'
+import { SidebarUser } from '@/features/app-shell/components/SidebarUser/SidebarUser'
+import { NAVIGATION_ITEMS } from '@/features/app-shell/constants/navigation'
 import { Logo } from '@/shared/components/Logo/Logo'
 import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle'
 import { SIGN_IN_HREF } from '@/shared/constants/routes'
@@ -35,13 +35,7 @@ export function AppSidebar() {
       </nav>
 
       <div className={styles.footer}>
-        <div className={styles.user}>
-          <UserAvatar />
-          <span className={styles.userText}>
-            <span className={styles.userName}>{CURRENT_USER.name}</span>
-            <span className={styles.userEmail}>{CURRENT_USER.email}</span>
-          </span>
-        </div>
+        <SidebarUser />
 
         <div className={styles.actions}>
           <ThemeToggle />

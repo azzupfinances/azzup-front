@@ -1,8 +1,7 @@
 import { z } from 'zod'
 
 import { isValidCpf } from '@/features/auth/utils/cpf'
-
-export const PASSWORD_MIN_LENGTH = 8
+import { PASSWORD_MIN_LENGTH } from '@/shared/constants/password'
 
 export const registerFormSchema = z
   .object({

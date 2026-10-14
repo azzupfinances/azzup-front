@@ -1,12 +1,11 @@
-import { Construction } from 'lucide-react'
 import type { Metadata } from 'next'
 
-import { EmptyState } from '@/shared/components/EmptyState/EmptyState'
+import { ProfilePage } from '@/features/profile/components/ProfilePage/ProfilePage'
 
 export const metadata: Metadata = {
   title: 'Perfil',
 }
 
 export default function Page() {
-  return <EmptyState icon={Construction} title="Perfil em construção" description="Em breve por aqui." />
+  return <ProfilePage />
 }

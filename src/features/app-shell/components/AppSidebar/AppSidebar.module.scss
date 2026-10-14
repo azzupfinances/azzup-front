@@ -32,37 +32,6 @@
   border-top: 1px solid var(--color-border);
 }
 
-.user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.userText {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.userName,
-.userEmail {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.userName {
-  color: var(--color-heading);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-}
-
-.userEmail {
-  color: var(--color-muted);
-  font-size: var(--font-size-xs);
-}
-
 .actions {
   display: flex;
   align-items: center;

@@ -1,0 +1,7 @@
+@use '@/styles/mixins' as *;
+
+.form {
+  @include breakpoint-up(sm) {
+    max-width: calc(50% - var(--spacing-md) / 2);
+  }
+}

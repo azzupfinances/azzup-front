@@ -5,15 +5,12 @@ import { Controller, useForm } from 'react-hook-form'
 
 import { AuthPageHeader } from '@/features/auth/components/AuthPageHeader/AuthPageHeader'
 import { CpfField } from '@/features/auth/components/CpfField/CpfField'
-import {
-  PASSWORD_MIN_LENGTH,
-  registerFormSchema,
-  type RegisterFormValues,
-} from '@/features/auth/schemas/register-form.schema'
+import { registerFormSchema, type RegisterFormValues } from '@/features/auth/schemas/register-form.schema'
 import { Button } from '@/shared/components/Button/Button'
 import { Checkbox } from '@/shared/components/Checkbox/Checkbox'
 import { PasswordField } from '@/shared/components/PasswordField/PasswordField'
 import { TextField } from '@/shared/components/TextField/TextField'
+import { PASSWORD_MIN_LENGTH } from '@/shared/constants/password'
 
 import styles from './RegisterForm.module.scss'
 

@@ -65,6 +65,15 @@ Done and verified with screenshots (375 / 768 / 1024 / 1280 / 1440 / 1920 px):
   - Bills live in local state in `BillsManager` and reset on reload. Início's "Próximas contas"
     panel still uses its own sample data.
 
+- **Perfil** (`/azzup/perfil`, `src/features/profile`): photo (JPG/PNG/WebP up to 5 MB, read as a
+  data URL), personal data (full name, e-mail, phone with mask), gross salary and password change.
+  Each block saves on its own and its button stays disabled until something changes.
+  - The profile lives in memory in `UserProfileProvider` (mounted by the `(app)` layout, resets on
+    reload). `UserAvatar` (now in `shared`, sizes `md` / `xl`) and the sidebar name/e-mail read from
+    it, so a new photo or name shows up in the shell right away.
+  - The password change is simulated (no current-password check yet). The gross salary is stored
+    but not used by Início yet.
+
 - **Motion and color** (all CSS, no animation library; everything stops under `prefers-reduced-motion`):
   - Each spending category has a color (`--color-category-*` tokens, `color`/`softColor` on
     `TRANSACTION_CATEGORIES`), used by list icons and Início's category bars.

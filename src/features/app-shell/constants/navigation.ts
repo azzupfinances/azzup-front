@@ -25,9 +25,3 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
   { label: 'Perfil', href: PROFILE_HREF, icon: UserRound, isInBottomNav: true },
 ]
 
-// Placeholder until the session exists.
-export const CURRENT_USER = {
-  name: 'Marina Costa',
-  email: 'marina@email.com',
-  initials: 'MC',
-}

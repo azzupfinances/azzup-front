@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import { UserAvatar } from '@/features/app-shell/components/UserAvatar/UserAvatar'
 import { Logo } from '@/shared/components/Logo/Logo'
 import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle'
+import { UserAvatar } from '@/shared/components/UserAvatar/UserAvatar'
 import { PROFILE_HREF } from '@/shared/constants/routes'
 
 import styles from './AppTopBar.module.scss'
