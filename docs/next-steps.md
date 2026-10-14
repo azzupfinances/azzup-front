@@ -26,11 +26,16 @@ Done and verified with screenshots (375 / 768 / 1024 / 1280 / 1440 / 1920 px):
 - **Início** (`/azzup/inicio`, `src/features/dashboard`): balance, payday, recent transactions,
   upcoming bills, spending by category, with landing-style entrance animations.
 - **Extrato** (`/azzup/extrato`, `src/features/transactions`): month summary, search and
-  filters (type, category), list grouped by day, edit/delete in a modal (local only).
+  filters (type, category), list grouped by day (no per-day totals; only income amounts are
+  colored, expenses stay neutral with a minus sign — `Money tone="income"`), edit/delete in a modal (local only).
   Statement import is not built yet; its button shows a "coming soon" toast.
 
 - **Cartões** (`/azzup/cartoes`, `src/features/credit-cards`): create/edit/remove cards (name,
-  limit, due day) and the detail of every purchase still being paid. Card purchases are entered
+  limit, due day). Each card shows only its summary; the eye button opens a modal with every
+  purchase still being paid (`CreditCardPurchasesModal`). Each card has a bank
+  (`src/shared/constants/banks.ts`) that paints its header with the brand color and logo. The 16
+  logos in `public/bank-logos/` were copied from the `logos-bancos-br` package (official Open
+  Finance artwork; bank trademarks, used only to identify the bank). Card purchases are entered
   in the new transaction modal (payment method Pix / Cartão de crédito / Débito / Dinheiro /
   Boleto, then card and installments).
   - Calculations live in `src/shared/utils/installments.ts` and `credit-card-summary.ts`
@@ -43,6 +48,39 @@ Done and verified with screenshots (375 / 768 / 1024 / 1280 / 1440 / 1920 px):
     "Categoria · Nubank · 5/10"; those rows open Cartões instead of the edit modal. Every
     expense shows its payment method, and the list filters by method or by card.
   - Cartões is in the sidebar only; on phones it is reached from the overview link.
+
+- **Contas fixas** (`/azzup/contas`, `src/features/bills`): monthly fixed bills (name, amount,
+  category, due day) grouped as Atrasadas / A vencer / Pagas (each group has its own color, icon,
+  count and a colored stripe on the list), with a month summary and a
+  "Pagar" button per row. Create/edit/remove happen in a modal, not separate routes.
+  - A bill stores the months it was paid (`paidMonths`); status is derived from today's date.
+    Due day 31 falls on the month's last day.
+  - Each card's current-month invoice (sum of its installments due this month) joins the list
+    as "Fatura <cartão>" and can be marked paid; cards with nothing due this month are skipped.
+    Paid invoices are stored per card (`paidInvoiceMonths` in `CreditCardsProvider`), but the
+    Cartões screen does not use them yet (limit/committed still follow the month-over rule).
+  - "Valores a receber" (`ReceivablesSection`): money someone pays back in installments (loan,
+    sale). Shows only this month's installment of each one, with a "Recebi" button; an installment
+    missed in a previous month is not carried over yet. Local state, resets on reload.
+  - Bills live in local state in `BillsManager` and reset on reload. Início's "Próximas contas"
+    panel still uses its own sample data.
+
+- **Motion and color** (all CSS, no animation library; everything stops under `prefers-reduced-motion`):
+  - Each spending category has a color (`--color-category-*` tokens, `color`/`softColor` on
+    `TRANSACTION_CATEGORIES`), used by list icons and Início's category bars.
+  - Entrance: list rows slide in one after another (`List`), summary amounts count up
+    (`AnimatedMoney` on `useCountUp`, which now rolls from the shown value when the amount
+    changes), progress bars fill from zero.
+  - Continuous: shine and floating light on bank headers, sliding stripes on the Contas paid bar,
+    light sweep on the Extrato spending bar, pulsing ring on the Atrasadas icon, swinging clock on A vencer,
+    drifting arrows in the Extrato summary, ripple on the phone "+" button.
+  - Feedback: a row marked paid/received glows green and its icon pops (`useRowHighlight`).
+  - Navigation: each card header has a view transition name, so it morphs into the banner of
+    `/azzup/cartoes/[id]` (React `<ViewTransition>`, no Next config needed).
+
+- **Phones (below `md`)**: Início lists show only their first 3 items (`isCompactOnPhone` on
+  `DashboardPanel`) and the card summaries drop the limit bar and "Última parcela"
+  (`isCompactOnPhone` on `CreditCardSummaryCard`). Desktop is unchanged.
 
 ## Current phase: visual only
 

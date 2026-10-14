@@ -62,6 +62,7 @@ export function DashboardPage() {
             title="Gastos por categoria"
             items={SAMPLE_CATEGORY_SPENDING}
             action={{ label: 'Detalhes', href: TRANSACTIONS_HREF }}
+            isCompactOnPhone
           />
         </Reveal>
       </div>

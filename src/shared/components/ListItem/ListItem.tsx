@@ -1,6 +1,6 @@
 import { ChevronRight, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 
 import { classNames } from '@/shared/utils/class-names'
 
@@ -9,6 +9,8 @@ import styles from './ListItem.module.scss'
 type ListItemProps = {
   icon?: LucideIcon
   iconTone?: 'default' | 'success' | 'warning' | 'danger'
+  // Custom icon colors (e.g. a spending category); wins over `iconTone`.
+  iconColor?: { color: string; softColor: string }
   title: string
   description?: string
   trailing?: ReactNode
@@ -21,6 +23,7 @@ type ListItemProps = {
 export function ListItem({
   icon: Icon,
   iconTone = 'default',
+  iconColor,
   title,
   description,
   trailing,
@@ -33,7 +36,13 @@ export function ListItem({
   const content = (
     <>
       {Icon && (
-        <span className={classNames(styles.icon, styles[iconTone])} aria-hidden="true">
+        <span
+          className={classNames(styles.icon, iconColor ? styles.custom : styles[iconTone])}
+          style={
+            iconColor && ({ '--icon-color': iconColor.color, '--icon-color-soft': iconColor.softColor } as CSSProperties)
+          }
+          aria-hidden="true"
+        >
           <Icon size={18} />
         </span>
       )}

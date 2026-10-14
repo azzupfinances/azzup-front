@@ -12,6 +12,7 @@ import type { CreditCard } from '@/shared/types/credit-card.types'
 import styles from './CreditCardFormModal.module.scss'
 
 const NEW_CREDIT_CARD_VALUES: CreditCardFormValues = {
+  bankId: 'other',
   name: '',
   limitInCents: 0,
   dueDay: 10,

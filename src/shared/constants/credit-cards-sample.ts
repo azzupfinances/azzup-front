@@ -4,8 +4,8 @@ import type { CardPurchase, CreditCard } from '@/shared/types/credit-card.types'
 // the backend exists; amounts are integer cents. Card totals are never stored: they are
 // calculated from these purchases.
 export const SAMPLE_CREDIT_CARDS: CreditCard[] = [
-  { id: 'card-nubank', name: 'Nubank', limitInCents: 800_000, dueDay: 10 },
-  { id: 'card-inter', name: 'Inter', limitInCents: 300_000, dueDay: 5 },
+  { id: 'card-nubank', name: 'Nubank', bankId: 'nubank', limitInCents: 800_000, dueDay: 10, paidInvoiceMonths: [] },
+  { id: 'card-inter', name: 'Inter', bankId: 'inter', limitInCents: 300_000, dueDay: 5, paidInvoiceMonths: [] },
 ]
 
 export const SAMPLE_CARD_PURCHASES: CardPurchase[] = [

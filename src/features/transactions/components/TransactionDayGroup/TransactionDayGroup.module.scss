@@ -4,15 +4,8 @@
   gap: var(--spacing-sm);
 }
 
-.header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--spacing-md);
-  padding-inline: var(--spacing-xs);
-}
-
 .day {
+  padding-inline: var(--spacing-xs);
   color: var(--color-muted);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);

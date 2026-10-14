@@ -1,21 +1,24 @@
 'use client'
 
-import { CreditCard as CreditCardIcon, Plus } from 'lucide-react'
+import { CreditCard as CreditCardIcon, Eye, Pencil, Plus } from 'lucide-react'
 import { useState } from 'react'
 
-import { CreditCardDetails } from '@/features/credit-cards/components/CreditCardDetails/CreditCardDetails'
 import { CreditCardFormModal } from '@/features/credit-cards/components/CreditCardFormModal/CreditCardFormModal'
 import type { CreditCardFormValues } from '@/features/credit-cards/schemas/credit-card-form.schema'
 import { Button } from '@/shared/components/Button/Button'
+import { CreditCardSummaryCard } from '@/shared/components/CreditCardSummaryCard/CreditCardSummaryCard'
 import { EmptyState } from '@/shared/components/EmptyState/EmptyState'
+import { IconButton } from '@/shared/components/IconButton/IconButton'
 import { Modal } from '@/shared/components/Modal/Modal'
 import { PageHeader } from '@/shared/components/PageHeader/PageHeader'
 import { Reveal } from '@/shared/components/Reveal/Reveal'
 import { Skeleton } from '@/shared/components/Skeleton/Skeleton'
+import { getCreditCardHref } from '@/shared/constants/routes'
 import { useCreditCards } from '@/shared/hooks/useCreditCards'
 import { useTodayIsoDate } from '@/shared/hooks/useTodayIsoDate'
 import { useToast } from '@/shared/hooks/useToast'
 import type { CreditCard } from '@/shared/types/credit-card.types'
+import { summarizeCreditCard } from '@/shared/utils/credit-card-summary'
 
 import styles from './CreditCardsManager.module.scss'
 
@@ -99,15 +102,31 @@ export function CreditCardsManager() {
             {creditCards.map((creditCard) =>
               // Totals depend on the current month, known only in the browser.
               todayIsoDate ? (
-                <CreditCardDetails
+                <CreditCardSummaryCard
                   key={creditCard.id}
                   creditCard={creditCard}
-                  purchases={purchases}
-                  todayIsoDate={todayIsoDate}
-                  onEdit={handleOpenEdit}
+                  summary={summarizeCreditCard(creditCard, purchases, todayIsoDate)}
+                  actions={
+                    <>
+                      <IconButton
+                        icon={Eye}
+                        label={`Ver fatura do ${creditCard.name}`}
+                        size="sm"
+                        variant="outline"
+                        href={getCreditCardHref(creditCard.id)}
+                      />
+                      <IconButton
+                        icon={Pencil}
+                        label={`Editar cartão ${creditCard.name}`}
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleOpenEdit(creditCard)}
+                      />
+                    </>
+                  }
                 />
               ) : (
-                <Skeleton key={creditCard.id} shape="block" height="420px" />
+                <Skeleton key={creditCard.id} shape="block" height="236px" />
               ),
             )}
           </div>

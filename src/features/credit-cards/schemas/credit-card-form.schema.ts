@@ -1,6 +1,9 @@
 import { z } from 'zod'
 
+import { BANK_IDS } from '@/shared/constants/banks'
+
 export const creditCardFormSchema = z.object({
+  bankId: z.enum(BANK_IDS, 'Escolha o banco'),
   name: z.string().trim().min(1, 'Informe o nome do cartão'),
   limitInCents: z.number().int().positive('Informe o limite'),
   dueDay: z

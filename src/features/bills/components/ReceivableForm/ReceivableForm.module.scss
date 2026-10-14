@@ -1,0 +1,16 @@
+@use '@/styles/mixins' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.row {
+  display: grid;
+  gap: var(--spacing-md);
+
+  @include breakpoint-up(sm) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

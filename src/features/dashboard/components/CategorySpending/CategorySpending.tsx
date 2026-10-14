@@ -11,13 +11,14 @@ type CategorySpendingProps = {
   title: string
   items: SampleCategorySpending[]
   action?: { label: string; href: string }
+  isCompactOnPhone?: boolean
 }
 
-export function CategorySpending({ title, items, action }: CategorySpendingProps) {
+export function CategorySpending({ title, items, action, isCompactOnPhone }: CategorySpendingProps) {
   const totalInCents = items.reduce((sum, item) => sum + item.amountInCents, 0)
 
   return (
-    <DashboardPanel title={title} action={action}>
+    <DashboardPanel title={title} action={action} isCompactOnPhone={isCompactOnPhone}>
       <ul className={styles.list}>
         {items.map(({ categoryId, amountInCents }, index) => {
           const category = TRANSACTION_CATEGORIES[categoryId]
@@ -25,7 +26,11 @@ export function CategorySpending({ title, items, action }: CategorySpendingProps
           const sharePercentage = Math.round((amountInCents / totalInCents) * 100)
 
           return (
-            <li key={categoryId} className={styles.item}>
+            <li
+              key={categoryId}
+              className={styles.item}
+              style={{ '--category-color': category.color, '--category-color-soft': category.softColor } as CSSProperties}
+            >
               <span className={styles.icon} aria-hidden="true">
                 <Icon size={16} />
               </span>

@@ -7,6 +7,13 @@
   }
 }
 
+// Below the breakpoint; for phone-only rules that should not need undoing on larger screens.
+@mixin breakpoint-down($name) {
+  @media (max-width: (map.get($breakpoints, $name) - 0.02px)) {
+    @content;
+  }
+}
+
 @mixin focus-ring {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;

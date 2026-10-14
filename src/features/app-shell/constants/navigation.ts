@@ -19,8 +19,8 @@ export type NavigationItem = {
 
 export const NAVIGATION_ITEMS: NavigationItem[] = [
   { label: 'Início', href: SYSTEM_HOME_HREF, icon: House, isInBottomNav: true },
+  { label: 'Contas fixas', href: BILLS_HREF, icon: CalendarClock, isInBottomNav: true },
   { label: 'Extrato', href: TRANSACTIONS_HREF, icon: ArrowLeftRight, isInBottomNav: true },
-  { label: 'Contas', href: BILLS_HREF, icon: CalendarClock, isInBottomNav: true },
   { label: 'Cartões', href: CREDIT_CARDS_HREF, icon: CreditCard, isInBottomNav: false },
   { label: 'Perfil', href: PROFILE_HREF, icon: UserRound, isInBottomNav: true },
 ]

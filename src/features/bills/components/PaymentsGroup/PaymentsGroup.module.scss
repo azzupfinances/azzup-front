@@ -1,0 +1,127 @@
+@use '@/styles/mixins' as *;
+
+.group {
+  --group-color: var(--color-primary);
+  --group-color-soft: var(--color-accent-soft);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.overdue {
+  --group-color: var(--color-danger);
+  --group-color-soft: var(--color-danger-soft);
+}
+
+.pending {
+  --group-color: var(--color-warning);
+  --group-color-soft: var(--color-warning-soft);
+}
+
+.paid {
+  --group-color: var(--color-success);
+  --group-color-soft: var(--color-success-soft);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-inline: var(--spacing-xs);
+}
+
+.icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: var(--group-color-soft);
+  color: var(--group-color);
+}
+
+// Overdue keeps calling for attention: a ring pulses out of the alert icon.
+.overdue .icon {
+  animation: alert-pulse 2s ease-out infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+// Pending: the clock swings softly, time is running.
+.pending .icon svg {
+  animation: clock-swing 3s ease-in-out infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes alert-pulse {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--group-color) 45%, transparent);
+  }
+
+  70%,
+  to {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+@keyframes clock-swing {
+  25% {
+    transform: rotate(-12deg);
+  }
+
+  75% {
+    transform: rotate(12deg);
+  }
+}
+
+.headerText {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--group-color);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding-inline: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--group-color-soft);
+  color: var(--group-color);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.description {
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+}
+
+.total {
+  flex-shrink: 0;
+  color: var(--color-heading);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+// Colored stripe on the left edge ties every row to its group.
+.list {
+  border-left: 4px solid var(--group-color);
+}

@@ -6,7 +6,11 @@ import { TRANSACTIONS_HREF } from '@/shared/constants/routes'
 
 export function RecentTransactions() {
   return (
-    <DashboardPanel title="Últimas transações" action={{ label: 'Ver extrato', href: TRANSACTIONS_HREF }}>
+    <DashboardPanel
+      title="Últimas transações"
+      action={{ label: 'Ver extrato', href: TRANSACTIONS_HREF }}
+      isCompactOnPhone
+    >
       <List label="Últimas transações">
         {SAMPLE_RECENT_TRANSACTIONS.map((transaction) => (
           <TransactionListItem

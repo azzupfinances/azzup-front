@@ -34,3 +34,10 @@
     @include focus-ring;
   }
 }
+
+// Phones show only the first items; the header link leads to the full list.
+.isCompactOnPhone ul > li:nth-child(n + 4) {
+  @include breakpoint-down(md) {
+    display: none;
+  }
+}

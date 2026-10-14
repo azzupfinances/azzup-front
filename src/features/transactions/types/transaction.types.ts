@@ -39,6 +39,5 @@ export type TransactionsFilters = {
 
 export type TransactionDayGroup = {
   date: string
-  totalInCents: number
   transactions: Transaction[]
 }

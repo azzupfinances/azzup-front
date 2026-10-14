@@ -48,3 +48,21 @@ export function addMonthsToIsoDate(isoDate: string, months: number) {
 export function getIsoMonth(isoDate: string) {
   return isoDate.slice(0, 7)
 }
+
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
+
+// Whole days from one date to another; negative when `toIsoDate` is earlier.
+export function getDaysBetweenIsoDates(fromIsoDate: string, toIsoDateValue: string) {
+  const differenceInMilliseconds = parseIsoDate(toIsoDateValue).getTime() - parseIsoDate(fromIsoDate).getTime()
+
+  // Rounded because a daylight saving change makes a day 23 or 25 hours long.
+  return Math.round(differenceInMilliseconds / MILLISECONDS_PER_DAY)
+}
+
+// Calendar months from one date to another, ignoring the day ("2026-06-30" → "2026-07-01" is 1).
+export function getMonthsBetweenIsoDates(fromIsoDate: string, toIsoDateValue: string) {
+  const [fromYear, fromMonth] = fromIsoDate.split('-').map(Number)
+  const [toYear, toMonth] = toIsoDateValue.split('-').map(Number)
+
+  return (toYear - fromYear) * 12 + (toMonth - fromMonth)
+}

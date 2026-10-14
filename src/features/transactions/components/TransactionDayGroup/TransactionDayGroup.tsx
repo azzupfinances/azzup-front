@@ -1,9 +1,8 @@
 import type { Transaction, TransactionDayGroup as DayGroup } from '@/features/transactions/types/transaction.types'
 import { List } from '@/shared/components/List/List'
-import { Money } from '@/shared/components/Money/Money'
 import { getPaymentLabel } from '@/features/transactions/utils/card-installments'
 import { TransactionListItem } from '@/shared/components/TransactionListItem/TransactionListItem'
-import { CREDIT_CARDS_HREF } from '@/shared/constants/routes'
+import { getCreditCardHref } from '@/shared/constants/routes'
 import type { CreditCard } from '@/shared/types/credit-card.types'
 import { addDaysToIsoDate, parseIsoDate } from '@/shared/utils/iso-date'
 
@@ -41,10 +40,7 @@ export function TransactionDayGroup({
 
   return (
     <section className={styles.group} aria-label={dayLabel}>
-      <header className={styles.header}>
-        <h2 className={styles.day}>{dayLabel}</h2>
-        <Money amountInCents={group.totalInCents} size="sm" tone="signed" />
-      </header>
+      <h2 className={styles.day}>{dayLabel}</h2>
 
       <List label={`Transações de ${dayLabel}`}>
         {group.transactions.map((transaction) => (
@@ -54,8 +50,8 @@ export function TransactionDayGroup({
             categoryId={transaction.categoryId}
             amountInCents={transaction.amountInCents}
             paymentLabel={getPaymentLabel(transaction, creditCards)}
-            // Installments belong to a card purchase, so they open the card details instead.
-            href={transaction.cardInstallment ? CREDIT_CARDS_HREF : undefined}
+            // Installments belong to a card purchase, so they open that card's invoice instead.
+            href={transaction.cardInstallment ? getCreditCardHref(transaction.cardInstallment.creditCardId) : undefined}
             onClick={transaction.cardInstallment ? undefined : () => onTransactionClick(transaction)}
           />
         ))}

@@ -17,7 +17,8 @@ type TransactionListItemProps = {
   onClick?: () => void
 }
 
-// One transaction row inside a List: income shows a wallet in green, expenses their category.
+// One transaction row inside a List: income shows a wallet in green, expenses their category
+// icon in the category color.
 export function TransactionListItem({
   description,
   categoryId,
@@ -35,9 +36,10 @@ export function TransactionListItem({
     <ListItem
       icon={isIncome ? Wallet : category.icon}
       iconTone={isIncome ? 'success' : 'default'}
+      iconColor={isIncome ? undefined : category}
       title={description}
       description={paymentLabel ? `${kindLabel} · ${paymentLabel}` : kindLabel}
-      trailing={<Money amountInCents={amountInCents} size="sm" tone="signed" />}
+      trailing={<Money amountInCents={amountInCents} size="sm" tone="income" />}
       trailingDetail={dateLabel}
       href={href}
       onClick={onClick}

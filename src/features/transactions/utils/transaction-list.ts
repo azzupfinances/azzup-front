@@ -50,15 +50,14 @@ export function filterTransactions(transactions: Transaction[], filters: Transac
   })
 }
 
-// Newest day first; each day keeps its own net total.
+// Newest day first.
 export function groupTransactionsByDay(transactions: Transaction[]): TransactionDayGroup[] {
   const groups = new Map<string, TransactionDayGroup>()
   const sortedTransactions = [...transactions].sort((first, second) => second.date.localeCompare(first.date))
 
   for (const transaction of sortedTransactions) {
-    const group = groups.get(transaction.date) ?? { date: transaction.date, totalInCents: 0, transactions: [] }
+    const group = groups.get(transaction.date) ?? { date: transaction.date, transactions: [] }
 
-    group.totalInCents += transaction.amountInCents
     group.transactions.push(transaction)
     groups.set(transaction.date, group)
   }

@@ -1,3 +1,8 @@
+@use '@/styles/mixins' as *;
+
+// Rows after this one appear together, so long lists do not keep the user waiting.
+$staggered-rows-count: 12;
+
 .list {
   display: flex;
   flex-direction: column;
@@ -9,5 +14,29 @@
 
   > li + li {
     border-top: 1px solid var(--color-border);
+  }
+
+  // Rows slide in one after another when they mount: on load, when a filter brings
+  // them back or when an entry moves to another list.
+  > li {
+    animation: row-in 450ms var(--easing-reveal) backwards;
+    animation-delay: #{$staggered-rows-count * 40ms};
+
+    @include reduced-motion {
+      animation: none;
+    }
+  }
+
+  @for $index from 1 through $staggered-rows-count {
+    > li:nth-child(#{$index}) {
+      animation-delay: #{($index - 1) * 40ms};
+    }
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
 }

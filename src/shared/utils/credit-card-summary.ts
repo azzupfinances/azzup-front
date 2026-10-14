@@ -3,7 +3,6 @@ import type {
   CreditCard,
   CreditCardSummary,
   Installment,
-  PurchaseProgress,
 } from '@/shared/types/credit-card.types'
 import { buildInstallments } from '@/shared/utils/installments'
 import { getIsoMonth } from '@/shared/utils/iso-date'
@@ -45,36 +44,4 @@ export function summarizeCreditCard(
     ),
     lastInstallmentDate,
   }
-}
-
-// Purchases of the card that still have pending installments, the ones ending first on top.
-export function getActivePurchasesProgress(
-  cardId: string,
-  purchases: CardPurchase[],
-  todayIsoDate: string,
-): PurchaseProgress[] {
-  return purchases
-    .filter((purchase) => purchase.creditCardId === cardId)
-    .flatMap((purchase) => {
-      const installments = buildInstallments(purchase)
-      const pendingInstallments = installments.filter((installment) =>
-        isInstallmentPending(installment, todayIsoDate),
-      )
-
-      if (pendingInstallments.length === 0) {
-        return []
-      }
-
-      return [
-        {
-          purchase,
-          paidCount: installments.length - pendingInstallments.length,
-          remainingCount: pendingInstallments.length,
-          remainingInCents: sumInstallments(pendingInstallments),
-          nextInstallmentInCents: pendingInstallments[0].amountInCents,
-          lastInstallmentDate: pendingInstallments[pendingInstallments.length - 1].dueDate,
-        },
-      ]
-    })
-    .sort((first, second) => first.lastInstallmentDate.localeCompare(second.lastInstallmentDate))
 }

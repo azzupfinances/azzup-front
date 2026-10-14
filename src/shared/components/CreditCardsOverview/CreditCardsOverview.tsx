@@ -54,6 +54,7 @@ export function CreditCardsOverview() {
                 key={creditCard.id}
                 creditCard={creditCard}
                 summary={summarizeCreditCard(creditCard, purchases, todayIsoDate)}
+                isCompactOnPhone
               />
             ) : (
               <Skeleton key={creditCard.id} shape="block" height="236px" />

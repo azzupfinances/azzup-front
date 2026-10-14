@@ -35,6 +35,21 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-lg);
+  transition: transform var(--transition-base);
+}
+
+// A small nudge on hover so rows feel alive under the pointer.
+.interactive:hover .icon {
+  transform: scale(1.08) rotate(-6deg);
+
+  @include reduced-motion {
+    transform: none;
+  }
+}
+
+.custom {
+  background-color: var(--icon-color-soft);
+  color: var(--icon-color);
 }
 
 .default {

@@ -1,23 +1,30 @@
-.details {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  min-width: 0;
-}
-
-.purchases {
+.section {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
 }
 
-.purchasesTitle {
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding-inline: var(--spacing-xs);
+}
+
+.title {
   color: var(--color-heading);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
 }
 
-.emptyPurchases {
+.subtitle {
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.empty {
   padding: var(--spacing-md);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-lg);

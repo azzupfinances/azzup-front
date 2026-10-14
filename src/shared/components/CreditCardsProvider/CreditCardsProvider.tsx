@@ -5,7 +5,7 @@ import { createContext, useCallback, useMemo, useState, type ReactNode } from 'r
 import { SAMPLE_CARD_PURCHASES, SAMPLE_CREDIT_CARDS } from '@/shared/constants/credit-cards-sample'
 import type { CardPurchase, CreditCard } from '@/shared/types/credit-card.types'
 
-type CreditCardInput = Omit<CreditCard, 'id'>
+type CreditCardInput = Omit<CreditCard, 'id' | 'paidInvoiceMonths'>
 type CardPurchaseInput = Omit<CardPurchase, 'id'>
 
 type CreditCardsContextValue = {
@@ -15,6 +15,7 @@ type CreditCardsContextValue = {
   updateCreditCard: (creditCard: CreditCard) => void
   deleteCreditCard: (creditCardId: string) => void
   createPurchase: (input: CardPurchaseInput) => void
+  toggleInvoicePaid: (creditCardId: string, month: string) => void
 }
 
 export const CreditCardsContext = createContext<CreditCardsContextValue | null>(null)
@@ -31,7 +32,7 @@ export function CreditCardsProvider({ children }: CreditCardsProviderProps) {
   const [purchases, setPurchases] = useState(SAMPLE_CARD_PURCHASES)
 
   const createCreditCard = useCallback((input: CreditCardInput) => {
-    setCreditCards((current) => [...current, { ...input, id: crypto.randomUUID() }])
+    setCreditCards((current) => [...current, { ...input, id: crypto.randomUUID(), paidInvoiceMonths: [] }])
   }, [])
 
   const updateCreditCard = useCallback((updatedCreditCard: CreditCard) => {
@@ -50,9 +51,37 @@ export function CreditCardsProvider({ children }: CreditCardsProviderProps) {
     setPurchases((current) => [...current, { ...input, id: crypto.randomUUID() }])
   }, [])
 
+  // Adds or removes the month ("YYYY-MM") from the card's paid invoices.
+  const toggleInvoicePaid = useCallback((creditCardId: string, month: string) => {
+    setCreditCards((current) =>
+      current.map((creditCard) => {
+        if (creditCard.id !== creditCardId) {
+          return creditCard
+        }
+
+        const isPaid = creditCard.paidInvoiceMonths.includes(month)
+
+        return {
+          ...creditCard,
+          paidInvoiceMonths: isPaid
+            ? creditCard.paidInvoiceMonths.filter((paidMonth) => paidMonth !== month)
+            : [...creditCard.paidInvoiceMonths, month],
+        }
+      }),
+    )
+  }, [])
+
   const contextValue = useMemo(
-    () => ({ creditCards, purchases, createCreditCard, updateCreditCard, deleteCreditCard, createPurchase }),
-    [creditCards, purchases, createCreditCard, updateCreditCard, deleteCreditCard, createPurchase],
+    () => ({
+      creditCards,
+      purchases,
+      createCreditCard,
+      updateCreditCard,
+      deleteCreditCard,
+      createPurchase,
+      toggleInvoicePaid,
+    }),
+    [creditCards, purchases, createCreditCard, updateCreditCard, deleteCreditCard, createPurchase, toggleInvoicePaid],
   )
 
   return <CreditCardsContext.Provider value={contextValue}>{children}</CreditCardsContext.Provider>

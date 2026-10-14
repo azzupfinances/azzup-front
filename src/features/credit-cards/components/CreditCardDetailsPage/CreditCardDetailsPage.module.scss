@@ -1,0 +1,37 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+// Doubled class so it wins over the Button module regardless of stylesheet order.
+.backLink.backLink {
+  margin-bottom: var(--spacing-sm);
+  margin-left: calc(var(--spacing-md) * -1);
+}
+
+.invoice {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.invoiceHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding-inline: var(--spacing-xs);
+}
+
+.invoiceTitle {
+  color: var(--color-heading);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.invoiceCount {
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}

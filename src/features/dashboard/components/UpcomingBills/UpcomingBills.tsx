@@ -9,7 +9,7 @@ import { TRANSACTION_CATEGORIES } from '@/shared/constants/transaction-categorie
 
 export function UpcomingBills() {
   return (
-    <DashboardPanel title="Próximas contas" action={{ label: 'Ver todas', href: BILLS_HREF }}>
+    <DashboardPanel title="Próximas contas" action={{ label: 'Ver todas', href: BILLS_HREF }} isCompactOnPhone>
       <List label="Próximas contas">
         {SAMPLE_UPCOMING_BILLS.map((bill) => {
           const isOverdue = bill.status === 'overdue'

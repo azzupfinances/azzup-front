@@ -1,0 +1,15 @@
+@use '@/styles/mixins' as *;
+
+// Doubled class so it wins over the Button module regardless of stylesheet order.
+.deleteButton.deleteButton {
+  color: var(--color-danger);
+
+  &:hover {
+    background-color: var(--color-danger-soft);
+  }
+
+  // Destructive action sits apart, on the opposite side of save.
+  @include breakpoint-up(md) {
+    margin-right: auto;
+  }
+}

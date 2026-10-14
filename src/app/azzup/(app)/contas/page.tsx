@@ -1,12 +1,11 @@
-import { Construction } from 'lucide-react'
 import type { Metadata } from 'next'
 
-import { EmptyState } from '@/shared/components/EmptyState/EmptyState'
+import { BillsPage } from '@/features/bills/components/BillsPage/BillsPage'
 
 export const metadata: Metadata = {
-  title: 'Contas',
+  title: 'Contas fixas',
 }
 
 export default function Page() {
-  return <EmptyState icon={Construction} title="Contas em construção" description="Em breve por aqui." />
+  return <BillsPage />
 }

@@ -10,8 +10,11 @@ import {
 import { CurrencyField } from '@/shared/components/CurrencyField/CurrencyField'
 import { Select } from '@/shared/components/Select/Select'
 import { TextField } from '@/shared/components/TextField/TextField'
+import { BANKS, type BankId } from '@/shared/constants/banks'
 
 import styles from './CreditCardForm.module.scss'
+
+const BANK_OPTIONS = Object.values(BANKS).map((bank) => ({ value: bank.id, label: bank.name }))
 
 const DUE_DAY_OPTIONS = Array.from({ length: 31 }, (_, index) => ({
   value: String(index + 1),
@@ -30,6 +33,8 @@ export function CreditCardForm({ formId, defaultValues, onSubmit }: CreditCardFo
     control,
     register,
     handleSubmit,
+    getValues,
+    setValue,
     formState: { errors },
   } = useForm<CreditCardFormValues>({
     resolver: zodResolver(creditCardFormSchema),
@@ -37,11 +42,26 @@ export function CreditCardForm({ formId, defaultValues, onSubmit }: CreditCardFo
     defaultValues,
   })
 
+  // Saves typing: the bank name becomes the card name until the user writes one.
+  function handleBankChange(bankId: BankId) {
+    if (bankId !== 'other' && getValues('name').trim() === '') {
+      setValue('name', BANKS[bankId].name, { shouldValidate: true })
+    }
+  }
+
   return (
     <form id={formId} className={styles.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+      <Select
+        label="Banco"
+        options={BANK_OPTIONS}
+        hint="Dá a cor e o logo do cartão."
+        error={errors.bankId?.message}
+        {...register('bankId', { onChange: (event) => handleBankChange(event.target.value as BankId) })}
+      />
+
       <TextField
         label="Nome do cartão"
-        placeholder="Ex.: Nubank, Inter, Itaú"
+        placeholder="Ex.: Nubank Ultravioleta"
         error={errors.name?.message}
         {...register('name')}
       />

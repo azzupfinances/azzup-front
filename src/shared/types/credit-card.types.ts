@@ -1,11 +1,16 @@
+import type { BankId } from '@/shared/constants/banks'
 import type { CategoryId } from '@/shared/constants/transaction-categories'
 
 export type CreditCard = {
   id: string
   name: string
+  // Gives the card its logo and brand color.
+  bankId: BankId
   limitInCents: number
   // Day of the month the bill is due (1–31).
   dueDay: number
+  // Months ("YYYY-MM") whose invoice was marked as paid.
+  paidInvoiceMonths: string[]
 }
 
 // One card purchase, paid in full (1 installment) or in N installments.
@@ -38,14 +43,4 @@ export type CreditCardSummary = {
   currentMonthInCents: number
   // ISO date of the furthest pending installment; `null` when nothing is pending.
   lastInstallmentDate: string | null
-}
-
-export type PurchaseProgress = {
-  purchase: CardPurchase
-  paidCount: number
-  remainingCount: number
-  remainingInCents: number
-  // Amount of the next installment to be paid.
-  nextInstallmentInCents: number
-  lastInstallmentDate: string
 }

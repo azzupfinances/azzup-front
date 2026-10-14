@@ -1,0 +1,152 @@
+@use '@/styles/mixins' as *;
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: linear-gradient(
+    120deg,
+    var(--bank-color) 0%,
+    color-mix(in srgb, var(--bank-color) 72%, #000) 100%
+  );
+  color: var(--color-on-inverted);
+
+  // A glossy band keeps sliding across the card now and then, like light on plastic.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 35%,
+      rgb(255 255 255 / 0.22) 50%,
+      transparent 65%
+    );
+    transform: translateX(-100%);
+    animation: card-shine 7s ease-in-out 1.5s infinite;
+    pointer-events: none;
+  }
+
+  // Soft light circle in the corner that slowly floats, a nod to real card artwork.
+  &::after {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -10%;
+    width: 180px;
+    height: 180px;
+    border-radius: var(--radius-full);
+    background: radial-gradient(circle, rgb(255 255 255 / 0.18), transparent 70%);
+    animation: circle-float 10s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  @include reduced-motion {
+    &::before,
+    &::after {
+      animation: none;
+    }
+  }
+}
+
+@keyframes card-shine {
+  // Most of the cycle is idle, so the shine reads as a glint and not a loader.
+  30%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes circle-float {
+  to {
+    transform: translate(-30px, 20px) scale(1.15);
+  }
+}
+
+// White tile so every logo stays legible on any brand color.
+.logo {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-on-inverted);
+  color: var(--bank-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.logoImage {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  overflow: hidden;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dueDay {
+  color: var(--color-on-inverted-muted);
+  font-size: var(--font-size-xs);
+}
+
+// Above the decorative circle so the buttons stay clickable.
+.actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--spacing-xs);
+}
+
+.lg {
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
+
+  @include breakpoint-up(md) {
+    padding: var(--spacing-xl);
+  }
+
+  &::after {
+    width: 320px;
+    height: 320px;
+  }
+
+  .logo {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-xl);
+  }
+
+  .logoImage {
+    width: 40px;
+    height: 40px;
+  }
+
+  .name {
+    font-size: var(--font-size-xl);
+    letter-spacing: -0.02em;
+
+    @include breakpoint-up(md) {
+      font-size: var(--font-size-2xl);
+    }
+  }
+
+  .dueDay {
+    font-size: var(--font-size-sm);
+  }
+}
